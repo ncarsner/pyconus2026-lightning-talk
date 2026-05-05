@@ -12,6 +12,7 @@ projects or referenced directly, these files encode best practices for:
 - ⚖️ **Legal and fiscal analysis**
 - 📊 **Dashboarding and reporting** (Plotly, Dash, Matplotlib)
 - ⚙️ **Process modernization** (ETL, automation, legacy migration)
+- 🧾 **GitHub issue creation** with explicit user-request safeguards
 
 ---
 
@@ -43,6 +44,7 @@ agents-and-skills/
 │   ├── nlp-processing.md              # spaCy / Transformers / sklearn patterns
 │   ├── legal-fiscal-analysis.md       # Decimal arithmetic, tax rules, audit trails
 │   ├── dashboarding-reporting.md      # Matplotlib / Plotly / Dash / Excel patterns
+│   ├── github-issue-creation.md       # Safe GitHub issue creation workflow
 │   └── process-modernization.md       # ETL, data quality, change detection
 │
 └── templates/                         # Ready-to-copy configuration files

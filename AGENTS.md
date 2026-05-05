@@ -54,8 +54,11 @@ workstreams or deep-dive investigations.
 ```
 agents-and-skills/
 ├── AGENTS.md                  ← you are here — root instructions for agents
+├── CLAUDE.md                  ← Claude-specific root instructions
+├── GEMINI.md                  ← Gemini-specific root instructions
 ├── RULES.md                   ← mandatory compliance rules for all agents
-├── README.md                  ← project overview (currently being updated)
+├── README.md                  ← project overview
+├── STRATEGY.md                ← repository strategy notes
 ├── _SCRIPTS/                  ← root-level utility and automation scripts
 ├── _SOLUTIONS/                ← root-level solution/reference materials
 ├── subagents/                 ← domain-specific subagent instruction files
@@ -79,8 +82,21 @@ agents-and-skills/
 │   ├── skills.md              ← skill registry and protocol
 │   ├── api-integration.md     ← HTTP clients, retry, pagination
 │   ├── cli-development.md     ← terminal UI patterns
+│   ├── github-issue-creation.md ← safe GitHub issue creation workflow
 │   └── ... (see skills/ for more)
+├── tools/                     ← deterministic code tools and recipes
+│   ├── tools.md               ← tool registry and usage protocol
+│   ├── collections.md         ← Counter, group_by, deduplicate, chunk, bisect
+│   ├── datetime.md            ← parse, format, ranges, timezone conversion
+│   ├── file-io.md             ← pathlib read/write, find, atomic write
+│   ├── hashing-encoding.md    ← SHA-256, HMAC, Base64, UUID, secure tokens
+│   ├── itertools-functools.md ← sliding windows, partition, memoize
+│   ├── math-statistics.md     ← clamp, percentile, moving average, summary
+│   ├── serialization.md       ← JSON, CSV, TOML parsing and serialization
+│   └── string-processing.md   ← slugify, regex extraction, normalization
 └── templates/                 ← project configuration templates
+    ├── epilogue.md            ← handoff and repository finalization checklist
+    ├── .python-version        ← Python version pin
     ├── pyproject.toml         ← dependency management
     ├── pytest.ini             ← test configuration
     └── ruff.toml              ← linting and formatting rules
@@ -88,9 +104,22 @@ agents-and-skills/
 
 ---
 
+## Local-Only Agent Directory
+
+When copying this repository's agentic assistance materials into another
+repository, place them in an `AGENTS/` directory for local use only and
+immediately add `AGENTS/` to the target repository's `.gitignore`.
+
+This repository is the master source for those materials. Downstream `AGENTS/`
+copies must remain untracked and must never be committed to another repository.
+
+---
+
 ## Agent Selection Guide
 
-Read this root file first, then load the domain-specific subagent file:
+Read this root file first, then load the domain-specific subagent file.
+For deterministic utility code (hashing, parsing, sorting, date math), copy
+from [`tools/`](tools/tools.md) before writing from scratch.
 
 | Task type | Subagent file |
 |-----------|---------------|

@@ -1,0 +1,197 @@
+# Skill: GitHub Issue Creation
+
+Create GitHub issues for a repository only when the user specifically asks for
+issue creation. This skill covers authorization checks, repository targeting,
+issue drafting, safe command execution, and reporting created issue URLs.
+
+---
+
+## Core Rule
+
+Do not create, edit, close, label, assign, or otherwise mutate GitHub issues
+unless the user's latest instruction explicitly asks for that action.
+
+Allowed explicit requests include:
+
+- "Create GitHub issues for these bugs in owner/repo."
+- "Open an issue in this repo for the failing login test."
+- "Use gh to create the issues we just drafted."
+
+Not explicit enough:
+
+- "What issues should we track?"
+- "Make a plan for follow-up work."
+- "This should probably be an issue."
+- "Draft GitHub issues for this."
+
+For non-explicit requests, return drafts or a proposed issue list only. Ask for
+creation approval before making any GitHub write.
+
+---
+
+## Required Inputs
+
+| Field | Description |
+|-------|-------------|
+| `repo` | Target repository in `OWNER/REPO` or `[HOST/]OWNER/REPO` format. |
+| `title` | Short, specific issue title. |
+| `body` | Markdown body with context, expected behavior, tasks, or acceptance criteria. |
+| `labels` | Optional existing label names requested by the user or already standard in the repo. |
+| `assignees` | Optional GitHub logins requested by the user. |
+| `milestone` | Optional milestone requested by the user. |
+| `project` | Optional project title requested by the user. |
+
+If `repo` is missing, infer it only from the current Git remote after verifying
+the result. If it cannot be determined confidently, ask the user for the repo.
+
+---
+
+## Workflow
+
+1. Verify explicit user intent.
+   - Proceed only when the latest user instruction specifically requests
+     creating GitHub issue(s).
+   - If the user asks to draft, plan, identify, or recommend issues, produce
+     Markdown drafts and stop.
+
+2. Resolve and verify the repository.
+   - Prefer the user-provided `OWNER/REPO` or `[HOST/]OWNER/REPO`.
+   - If absent, use `gh repo view --json nameWithOwner --jq '.nameWithOwner'`
+     from the target repository, then state the inferred repo before creating.
+   - Do not create issues when the repo target is ambiguous.
+
+3. Check GitHub CLI readiness.
+   - Run `command -v gh` to verify the GitHub CLI is installed.
+   - Run `gh auth status` to verify authentication.
+   - Do not print or request tokens. Do not run `gh auth status --show-token`.
+
+4. Prepare issue content.
+   - Use concrete user-provided title/body when available.
+   - When deriving issues from a bug report, review notes, or failing tests,
+     draft concise titles and bodies first.
+   - Include enough context for another developer to act without reading the
+     chat transcript.
+
+5. Create issues with `gh issue create`.
+   - Use `--repo` to avoid writing to the wrong repository.
+   - Use `--body-file` for multi-line Markdown bodies.
+   - Add labels, assignees, milestone, project, or template only when requested
+     or clearly established by the repo conventions.
+
+6. Report results.
+   - Return each created issue URL.
+   - Include any issue that was skipped and the reason.
+   - If a command fails, stop and show the failure context without retrying a
+     potentially duplicate creation unless the issue URL confirms success.
+
+---
+
+## Command Patterns
+
+Check prerequisites:
+
+```bash
+command -v gh
+gh auth status
+gh repo view --repo OWNER/REPO --json nameWithOwner,url
+```
+
+Create one issue:
+
+```bash
+gh issue create \
+  --repo OWNER/REPO \
+  --title "Short imperative title" \
+  --body-file /path/to/body.md
+```
+
+Create with optional metadata:
+
+```bash
+gh issue create \
+  --repo OWNER/REPO \
+  --title "Short imperative title" \
+  --body-file /path/to/body.md \
+  --label "bug" \
+  --assignee "@me" \
+  --milestone "v1.2"
+```
+
+When adding an issue to a GitHub Project, verify the authenticated account has
+the required project scope before creation:
+
+```bash
+gh auth status
+gh issue create \
+  --repo OWNER/REPO \
+  --title "Short imperative title" \
+  --body-file /path/to/body.md \
+  --project "Roadmap"
+```
+
+---
+
+## Issue Body Template
+
+Use this structure unless the repository has a more specific issue template:
+
+```markdown
+## Context
+
+<Why this issue exists and what prompted it.>
+
+## Expected Outcome
+
+<The observable behavior or deliverable that should exist when complete.>
+
+## Tasks
+
+- [ ] <Actionable task>
+- [ ] <Actionable task>
+
+## Acceptance Criteria
+
+- <Verifiable condition>
+- <Verifiable condition>
+```
+
+For bugs, prefer:
+
+```markdown
+## Summary
+
+<What is broken.>
+
+## Steps to Reproduce
+
+1. <Step>
+2. <Step>
+3. <Step>
+
+## Expected Behavior
+
+<What should happen.>
+
+## Actual Behavior
+
+<What happens instead.>
+
+## Evidence
+
+<Logs, failing test names, screenshots, or links.>
+```
+
+---
+
+## Safety Constraints
+
+- Treat GitHub issue creation as an external write operation.
+- Never create issues from speculative recommendations without explicit user
+  approval to create them.
+- Never use issue creation as a substitute for completing requested code work.
+- Never create duplicate issues intentionally. For obvious duplicate risk, run
+  `gh issue list --repo OWNER/REPO --search "<key terms>"` before creating.
+- Never include secrets, private credentials, or unredacted sensitive data in an
+  issue title or body.
+- Prefer stopping on the first failure during bulk creation to avoid partial,
+  confusing issue sets.

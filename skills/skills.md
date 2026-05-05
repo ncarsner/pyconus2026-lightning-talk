@@ -128,6 +128,40 @@ The following skills are available in this project. Agents must only invoke skil
 
 ---
 
+### `create-github-issue`
+
+**Purpose:** Create one or more GitHub issues in a repository only when the
+user has explicitly requested issue creation.
+
+**Input:**
+- `repo` (string, required) — Repository in `OWNER/REPO` or
+  `[HOST/]OWNER/REPO` format.
+- `issues` (list of objects, required) — Issues to create. Each object must
+  include `title` and `body`; it may include `labels`, `assignees`,
+  `milestone`, `project`, or `template` when requested.
+- `explicit_user_request` (boolean, required) — Whether the latest user
+  instruction specifically asks the agent to create GitHub issues.
+- `dry_run` (boolean, optional, default: false) — Preview commands and issue
+  content without creating issues.
+
+**Output:**
+- `created_issues` (list of objects) — Created issue numbers and URLs.
+- `skipped` (boolean) — Whether creation was skipped.
+- `reason` (string) — Explanation when `skipped` is true or partial creation
+  occurs.
+
+**Constraints:**
+- Must not create or mutate GitHub issues unless `explicit_user_request` is
+  true and the requested repository is clear.
+- Must use `gh issue create` or an approved GitHub API client; never embed
+  tokens, secrets, or credentials in source files or command arguments.
+- Must preview or summarize inferred issue content before creation when the
+  user did not provide concrete issue titles and bodies.
+- Must return created issue URLs and stop on the first failed creation unless
+  the user explicitly permits best-effort bulk creation.
+
+---
+
 ## 4. Skill Output Handling
 
 After invoking a skill, the calling agent must:
@@ -187,3 +221,4 @@ corresponding `.md` files in this directory:
 | Error handling | [`error-handling.md`](error-handling.md) | All |
 | Logging & observability | [`logging-observability.md`](logging-observability.md) | All |
 | Approved packages | [`approved-packages.md`](approved-packages.md) | All |
+| GitHub issue creation | [`github-issue-creation.md`](github-issue-creation.md) | All |
