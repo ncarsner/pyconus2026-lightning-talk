@@ -22,32 +22,70 @@ projects or referenced directly, these files encode best practices for:
 agents-and-skills/
 │
 ├── AGENTS.md                          # Root agent instructions (start here)
+├── CLAUDE.md                          # Claude-specific root instructions
+├── GEMINI.md                          # Gemini-specific root instructions
 ├── RULES.md                           # Mandatory compliance rules for all agents
+├── STRATEGY.md                        # Repository strategy notes
+├── _SCRIPTS/                          # Root-level utility and automation scripts
+├── _SOLUTIONS/                        # Root-level solution and reference materials
 │
-├── agents/                            # Agent protocol and domain-specific guides
-│   ├── agents.md                      # Base agent protocol all agents must follow
+├── subagents/                         # Agent protocol and domain-specific guides
+│   ├── subagents.md                   # Base protocol all subagents must follow
+│   ├── accounting-agent.md            # Token usage and cost monitoring
 │   ├── cli-agent.md                   # CLI / terminal applications
-│   ├── web-dev-agent.md               # Web APIs and applications
-│   ├── nlp-agent.md                   # Natural language processing
-│   ├── legal-fiscal-agent.md          # Legal and fiscal analysis
+│   ├── containerization-agent.md      # Docker and deployment standards
 │   ├── dashboard-reporting-agent.md   # Dashboards and reports
-│   └── process-modernization-agent.md # Process automation and ETL
+│   ├── data-engineering-agent.md      # ETL and database pipelines
+│   ├── legal-fiscal-agent.md          # Compliance and fiscal logic
+│   ├── nlp-agent.md                   # Text analysis and LLM processing
+│   ├── process-modernization-agent.md # Legacy refactoring
+│   ├── security-agent.md              # Security review and hardening
+│   ├── testing-agent.md               # Test design and coverage
+│   ├── web-dev-agent.md               # Web APIs and applications
+│   ├── project-review-accessibility.md        # Accessibility deficiency review
+│   ├── project-review-change-manager.md       # Rollout readiness and stakeholder impact
+│   ├── project-review-cto.md                  # Strategic C-suite overview
+│   ├── project-review-enterprise-architect.md # Architecture standards and integration governance
+│   ├── project-review-interoperability.md     # API contracts and integration compatibility
+│   ├── project-review-observability.md        # Logging, metrics, tracing, and audit coverage
+│   ├── project-review-pm.md                   # Product value and release readiness
+│   ├── project-review-scrum-master.md         # Sprint health and Definition of Done
+│   ├── project-review-senior-dev.md           # Architectural efficiency review
+│   └── project-review-vp.md                   # Risk/reward tradeoff analysis
 │
 ├── skills/                            # Skill registry and reusable patterns
 │   ├── skills.md                      # Skill registry, invocation contract, and templates
-│   ├── python-formatting.md           # ruff format configuration and usage
-│   ├── python-testing.md              # pytest, coverage, mocking cookbook
-│   ├── python-linting.md              # ruff lint + mypy configuration
-│   ├── python-uv-workflow.md          # uv package manager complete reference
+│   ├── api-integration.md             # HTTP clients, retry, pagination
+│   ├── approved-packages.md           # Approved library list
 │   ├── cli-development.md             # argparse / click patterns
-│   ├── web-development.md             # FastAPI / Flask / Django patterns
-│   ├── nlp-processing.md              # spaCy / Transformers / sklearn patterns
-│   ├── legal-fiscal-analysis.md       # Decimal arithmetic, tax rules, audit trails
+│   ├── configuration-management.md    # Config file handling
 │   ├── dashboarding-reporting.md      # Matplotlib / Plotly / Dash / Excel patterns
+│   ├── database-access.md             # Database query patterns
+│   ├── error-handling.md              # Exception handling patterns
 │   ├── github-issue-creation.md       # Safe GitHub issue creation workflow
-│   └── process-modernization.md       # ETL, data quality, change detection
+│   ├── legal-fiscal-analysis.md       # Decimal arithmetic, tax rules, audit trails
+│   ├── logging-observability.md       # Structured logging and observability
+│   ├── nlp-processing.md              # spaCy / Transformers / sklearn patterns
+│   ├── process-modernization.md       # ETL, data quality, change detection
+│   ├── python-formatting.md           # ruff format configuration and usage
+│   ├── python-linting.md              # ruff lint + mypy configuration
+│   ├── python-testing.md              # pytest, coverage, mocking cookbook
+│   ├── python-uv-workflow.md          # uv package manager complete reference
+│   └── web-development.md             # FastAPI / Flask / Django patterns
+│
+├── tools/                             # Deterministic code tools and recipes
+│   ├── tools.md                       # Tool registry and usage protocol
+│   ├── collections.md                 # Counter, group_by, deduplicate, chunk, bisect
+│   ├── datetime.md                    # Parse, format, ranges, timezone conversion
+│   ├── file-io.md                     # pathlib read/write, find, atomic write
+│   ├── hashing-encoding.md            # SHA-256, HMAC, Base64, UUID, secure tokens
+│   ├── itertools-functools.md         # Sliding windows, partition, memoize
+│   ├── math-statistics.md             # Clamp, percentile, moving average, summary
+│   ├── serialization.md               # JSON, CSV, TOML parsing and serialization
+│   └── string-processing.md           # Slugify, regex extraction, normalization
 │
 └── templates/                         # Ready-to-copy configuration files
+    ├── epilogue.md                    # Handoff and repository finalization checklist
     ├── pyproject.toml                 # Full project config (pytest, ruff, mypy)
     ├── pytest.ini                     # Standalone pytest config
     ├── ruff.toml                      # Standalone ruff linter/formatter config
@@ -62,17 +100,17 @@ agents-and-skills/
 
 Agents should load and internalize these files before executing any task:
 
-1. `agents/agents.md` — defines the base agent protocol all agents must follow.
+1. `subagents/subagents.md` — defines the base agent protocol all agents must follow.
 2. `RULES.md` — mandatory compliance rules every agent must obey.
 3. `skills/skills.md` — lists all registered skills with their input/output contracts.
 4. `AGENTS.md` — Python-specific toolchain defaults, coding standards, and domain links.
 
 ### Adding a New Agent
 
-Follow the template at the bottom of `agents/agents.md` and create a new file in the `agents/` directory:
+Follow the template at the bottom of `subagents/subagents.md` and create a new file in the `subagents/` directory:
 
 ```
-agents/
+subagents/
 └── <agent-name>.md
 ```
 
@@ -85,7 +123,7 @@ Add an entry to the skill registry in `skills/skills.md` following the template 
 ## Quick Start (Python Projects)
 
 1. **Copy `AGENTS.md`** to the root of your new project.
-2. **Copy the relevant `agents/` file** for your domain (e.g., `agents/cli-agent.md`).
+2. **Copy the relevant `subagents/` file** for your domain (e.g., `subagents/cli-agent.md`).
 3. **Copy `templates/pyproject.toml`** and fill in the `<PLACEHOLDER>` values.
 4. **Run `uv venv && uv sync`** to set up the development environment.
 

@@ -148,8 +148,14 @@ To add a new agent to this project:
 | [`security-agent.md`](security-agent.md) | Audit and harden application security |
 | [`testing-agent.md`](testing-agent.md) | Design and implement test suites |
 | [`containerization-agent.md`](containerization-agent.md) | Containerize projects with Docker; guide deployment and maintenance |
-| [`accessibility-agent.md`](accessibility-agent.md) | Identify accessibility deficiencies in public-facing projects and publications |
 | [`accounting-agent.md`](accounting-agent.md) | Monitor token usage and estimate cost |
-| [`senior-dev-review-agent.md`](senior-dev-review-agent.md) | Ad hoc review: architectural efficiency and code quality |
-| [`vp-review-agent.md`](vp-review-agent.md) | Ad hoc review: risk/reward tradeoffs |
-| [`cto-review-agent.md`](cto-review-agent.md) | Ad hoc review: C-suite strategic overview |
+| [`project-review-senior-dev.md`](project-review-senior-dev.md) | Ad hoc review: architectural efficiency and code quality |
+| [`project-review-vp.md`](project-review-vp.md) | Ad hoc review: risk/reward tradeoffs |
+| [`project-review-cto.md`](project-review-cto.md) | Ad hoc review: C-suite strategic overview |
+| [`project-review-accessibility.md`](project-review-accessibility.md) | Identify accessibility deficiencies in public-facing projects and publications |
+| [`project-review-pm.md`](project-review-pm.md) | Ad hoc review: product value, acceptance criteria, and release readiness |
+| [`project-review-enterprise-architect.md`](project-review-enterprise-architect.md) | Ad hoc review: org-wide architecture standards and integration governance |
+| [`project-review-scrum-master.md`](project-review-scrum-master.md) | Ad hoc review: sprint health, Definition of Done, and delivery process |
+| [`project-review-change-manager.md`](project-review-change-manager.md) | Ad hoc review: rollout readiness, rollback plans, and stakeholder communication |
+| [`project-review-interoperability.md`](project-review-interoperability.md) | Ad hoc review: API contracts, protocol correctness, and integration compatibility |
+| [`project-review-observability.md`](project-review-observability.md) | Ad hoc review: logging, metrics, tracing, and audit log coverage |
