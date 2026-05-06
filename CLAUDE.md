@@ -62,28 +62,47 @@ agents-and-skills/
 ├── _SCRIPTS/                  ← root-level utility and automation scripts
 ├── _SOLUTIONS/                ← root-level solution/reference materials
 ├── subagents/                 ← domain-specific subagent instruction files
-│   ├── agents.md              ← subagent protocol reference and registry
-│   ├── accessibility-agent.md ← accessibility deficiency review
+│   ├── subagents.md           ← subagent protocol reference and registry
 │   ├── accounting-agent.md    ← token usage and cost monitoring
 │   ├── cli-agent.md           ← CLI application development
 │   ├── containerization-agent.md ← Docker and deployment standards
-│   ├── cto-review-agent.md    ← strategic C-suite overview
 │   ├── dashboard-reporting-agent.md ← report generation
 │   ├── data-engineering-agent.md ← ETL and database pipelines
 │   ├── legal-fiscal-agent.md  ← compliance and fiscal logic
 │   ├── nlp-agent.md           ← text analysis and LLM processing
 │   ├── process-modernization-agent.md ← legacy refactoring
 │   ├── security-agent.md      ← security review and hardening
-│   ├── senior-dev-review-agent.md ← architectural efficiency review
 │   ├── testing-agent.md       ← test design and coverage
-│   ├── vp-review-agent.md     ← risk/reward tradeoff analysis
-│   └── web-dev-agent.md       ← web services and APIs
+│   ├── web-dev-agent.md       ← web services and APIs
+│   ├── project-review-accessibility.md ← accessibility deficiency review
+│   ├── project-review-change-manager.md ← rollout readiness and stakeholder impact
+│   ├── project-review-cto.md  ← strategic C-suite overview
+│   ├── project-review-enterprise-architect.md ← architecture standards and integration governance
+│   ├── project-review-interoperability.md ← API contracts and integration compatibility
+│   ├── project-review-observability.md ← logging, metrics, tracing, and audit coverage
+│   ├── project-review-pm.md   ← product value and release readiness
+│   ├── project-review-scrum-master.md ← sprint health and Definition of Done
+│   ├── project-review-senior-dev.md ← architectural efficiency review
+│   └── project-review-vp.md   ← risk/reward tradeoff analysis
 ├── skills/                    ← reusable code patterns and recipes
 │   ├── skills.md              ← skill registry and protocol
 │   ├── api-integration.md     ← HTTP clients, retry, pagination
+│   ├── approved-packages.md   ← approved library list
 │   ├── cli-development.md     ← terminal UI patterns
+│   ├── configuration-management.md ← config file handling
+│   ├── dashboarding-reporting.md ← Matplotlib, Plotly, Dash, Excel
+│   ├── database-access.md     ← database query patterns
+│   ├── error-handling.md      ← exception handling patterns
 │   ├── github-issue-creation.md ← safe GitHub issue creation workflow
-│   └── ... (see skills/ for more)
+│   ├── legal-fiscal-analysis.md ← Decimal arithmetic, tax rules, audit trails
+│   ├── logging-observability.md ← structured logging and observability
+│   ├── nlp-processing.md      ← spaCy, Transformers, sklearn patterns
+│   ├── process-modernization.md ← ETL, data quality, change detection
+│   ├── python-formatting.md   ← ruff format configuration
+│   ├── python-linting.md      ← ruff lint and mypy configuration
+│   ├── python-testing.md      ← pytest, coverage, mocking cookbook
+│   ├── python-uv-workflow.md  ← uv package manager complete reference
+│   └── web-development.md     ← FastAPI, Flask, Django patterns
 ├── tools/                     ← deterministic code tools and recipes
 │   ├── tools.md               ← tool registry and usage protocol
 │   ├── collections.md         ← Counter, group_by, deduplicate, chunk, bisect
@@ -133,11 +152,18 @@ from [`tools/`](tools/tools.md) before writing from scratch.
 | Security hardening | [`subagents/security-agent.md`](subagents/security-agent.md) |
 | Testing & coverage | [`subagents/testing-agent.md`](subagents/testing-agent.md) |
 | Containerization | [`subagents/containerization-agent.md`](subagents/containerization-agent.md) |
-| Accessibility | [`subagents/accessibility-agent.md`](subagents/accessibility-agent.md) |
 | Cost/Token audit | [`subagents/accounting-agent.md`](subagents/accounting-agent.md) |
-| Senior Review | [`subagents/senior-dev-review-agent.md`](subagents/senior-dev-review-agent.md) |
-| VP/Risk Review | [`subagents/vp-review-agent.md`](subagents/vp-review-agent.md) |
-| CTO/Strategy | [`subagents/cto-review-agent.md`](subagents/cto-review-agent.md) |
+| **Project reviews (invoke as needed)** | |
+| Accessibility | [`subagents/project-review-accessibility.md`](subagents/project-review-accessibility.md) |
+| Change management / rollout | [`subagents/project-review-change-manager.md`](subagents/project-review-change-manager.md) |
+| CTO / strategy | [`subagents/project-review-cto.md`](subagents/project-review-cto.md) |
+| Enterprise architecture | [`subagents/project-review-enterprise-architect.md`](subagents/project-review-enterprise-architect.md) |
+| Interoperability / contracts | [`subagents/project-review-interoperability.md`](subagents/project-review-interoperability.md) |
+| Observability / audit logging | [`subagents/project-review-observability.md`](subagents/project-review-observability.md) |
+| Product Manager / value | [`subagents/project-review-pm.md`](subagents/project-review-pm.md) |
+| Scrum Master / process | [`subagents/project-review-scrum-master.md`](subagents/project-review-scrum-master.md) |
+| Senior developer / code quality | [`subagents/project-review-senior-dev.md`](subagents/project-review-senior-dev.md) |
+| VP / risk-reward | [`subagents/project-review-vp.md`](subagents/project-review-vp.md) |
 
 ---
 

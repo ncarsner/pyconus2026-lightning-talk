@@ -124,6 +124,7 @@ in place rather than creating new lowercase copies.
 | Claude     | `CLAUDE.md`  |
 | Gemini CLI | `GEMINI.md`  |
 | Codex      | `AGENTS.md`  |
+| Perplexity | `AGENTS.md`  |
 
 Each context file should reflect the repository as it stands after this session:
 - Current phase and status.
