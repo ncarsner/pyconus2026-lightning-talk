@@ -160,3 +160,10 @@ ruff format .
 # Type check
 mypy src/
 ```
+
+---
+
+## Credits
+
+The `/caveman` skill (`.claude/skills/caveman/`) is adapted from
+[Matt Pocock's skills library](https://github.com/mattpocock/skills/tree/main/skills/productivity/caveman).

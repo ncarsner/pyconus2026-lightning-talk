@@ -18,7 +18,9 @@ non-negotiable unless explicitly overridden in writing by a human reviewer.
 8. [Security and Secrets](#8-security-and-secrets)
 9. [Error Handling](#9-error-handling)
 10. [Logging and Observability](#10-logging-and-observability)
-11. [Placeholder: Performance Standards](#placeholder-performance-standards)
+11. [Architecture Boundaries](#11-architecture-boundaries)
+12. [Local-Only Agent Directory](#12-local-only-agent-directory)
+13. [Placeholder: Performance Standards](#placeholder-performance-standards)
 12. [Placeholder: Accessibility and Internationalization](#placeholder-accessibility-and-internationalization)
 13. [Placeholder: Data Privacy and Compliance](#placeholder-data-privacy-and-compliance)
 14. [Placeholder: Deployment and Environment Parity](#placeholder-deployment-and-environment-parity)
@@ -406,6 +408,31 @@ print(f"Processing {len(records)} records")
 | `WARNING` | Something unexpected that is recoverable |
 | `ERROR` | A failure that prevented an operation from completing |
 | `CRITICAL` | A failure that requires immediate human attention |
+
+---
+
+## 11. Architecture Boundaries
+
+**Rule:** All code in this repository must respect the following layer boundaries.
+Never skip a layer or bypass a boundary.
+
+```
+External Input (user, file, API) -> Validation -> Logic -> I/O -> Output
+```
+
+1. Business logic must not import from the I/O layer directly.
+2. I/O layer functions must not contain business logic.
+3. Validation must happen before business logic runs.
+4. Secrets must never appear in source code — load from environment.
+
+---
+
+## 12. Local-Only Agent Directory
+
+**Rule:** When copying this repository's agentic materials into another project,
+place them in an `AGENTS/` directory and immediately add `AGENTS/` to that
+project's `.gitignore`. The `AGENTS/` directory must remain untracked and must
+never be committed to another repository. This repository is the master source.
 
 ---
 
