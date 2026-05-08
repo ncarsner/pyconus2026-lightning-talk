@@ -1,0 +1,22 @@
+{
+    "permissions": {
+        "allow": [
+            "Bash(gh issue create *)",
+            "Bash(gh issue list *)",
+            "Bash(gh issue view *)",
+            "Bash(gh pr create *)",
+            "Bash(gh pr list *)",
+            "Bash(gh pr view *)",
+            "Bash(gh repo view *)",
+            "Bash(git branch *)",
+            "Bash(git commit *)",
+            "Bash(git diff *)",
+            "Bash(git log *)",
+            "Bash(git status *)",
+            "Bash(mypy *)",
+            "Bash(python3 -m pytest *)",
+            "Bash(ruff *)",
+            "Bash(uv *)"
+        ]
+    }
+}
