@@ -294,6 +294,14 @@ Allowed types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
 - Every PR must reference an issue (e.g., `Closes #42`).
 - Merge commits are preferred over squash when the history is meaningful.
 
+### Authorship
+
+**Agents are workers, not authors.** The git author identity must always reflect
+the human who owns the work. Agents must never run `git config user.name` or
+`git config user.email` to set an agent identity. No agent attribution of any
+kind — including `Co-Authored-By:` trailers — may appear in commits, PRs, or
+any version control artifact.
+
 ---
 
 ## 7. Testing and Coverage
