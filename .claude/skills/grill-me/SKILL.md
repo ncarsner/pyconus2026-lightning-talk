@@ -1,6 +1,6 @@
 ---
 name: grill-me
-description: A development idea has been proposed. The proposal is from the business team, product team, junior engineer, or even a hobbyist developer. The proposal is not fully baked, but the user wants to quickly identify the risks and gaps before investing more time in fleshing it out. Use this skill to quickly identify the risks and gaps in a proposal before investing more time in fleshing it out. The objective is to surface potential issues early in the process, so they can be addressed before too much time is invested in a flawed idea. This is not a code review or design review. The proposal may be a one-pager, a pitch deck, a product spec, or even just an idea described in text.
+description: A proposal has been received from the business team, product team, junior engineer, or hobbyist developer. The proposal is not fully baked, but the user wants to quickly identify the risks and gaps before investing more time in fleshing it out. Use this skill to quickly identify the risks and gaps in a proposal before investing more time in fleshing it out. The objective is to surface potential issues early in the process, so they can be addressed before too much time is invested in a flawed idea. This is not a code review or design review. The proposal may be a one-pager, a pitch deck, a product spec, or even just an idea described in text.
 disable-model-invocation: true
 allowed-tools: Read Grep
 ---

@@ -159,3 +159,16 @@ To add a new agent to this project:
 | [`project-review-change-manager.md`](project-review-change-manager.md) | Ad hoc review: rollout readiness, rollback plans, and stakeholder communication |
 | [`project-review-interoperability.md`](project-review-interoperability.md) | Ad hoc review: API contracts, protocol correctness, and integration compatibility |
 | [`project-review-observability.md`](project-review-observability.md) | Ad hoc review: logging, metrics, tracing, and audit log coverage |
+
+---
+
+## 10. External CLI Agents
+
+The orchestrator may delegate to external headless agents. These agents are not governed by internal markdown files but must be invoked with specific constraints:
+
+| Agent | CLI Command | Primary Use Case |
+|-------|-------------|------------------|
+| Claude | `claude -p ... --allowedTools "Read,Edit,Bash"` | Reasoning, complex edits, research |
+| Codex | `codex exec ...` | Surgical generation, translations |
+
+**Constraint:** Results from headless agents must be captured and summarized in the "Steps Taken" or "Result" section of the orchestrator's response.

@@ -40,9 +40,10 @@ These live in `.claude/skills/` and are called via `/skill-name`:
 
 | Skill | Invocation | What it does |
 |-------|-----------|--------------|
+| orient | `/orient [task]` | Bootstrap context: reads CLAUDE.md, RULES.md, subagent registry, skills index, and surveys repo structure |
 | format | `/format [path]` | `ruff format` + `ruff check --fix` |
 | test | `/test [flags]` | `pytest --cov=src --cov-fail-under=100` |
-| grill-me | `/grill-me [topic]` | Stress-test a design or proposal |
+| grill-me | `/grill-me [topic]` | Identify risks and gaps of a development proposal |
 | prd-to-issues | `/prd-to-issues [prd-path]` | Convert PRD to GitHub issues |
 | project-review | `/project-review [perspective]` | Structured multi-lens project audit |
 | stress-test | `/stress-test [topic]` | Stress-test a design, code, or proposal with hard questions |

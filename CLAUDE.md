@@ -28,3 +28,30 @@ python3 -m pytest -x
 | Skill patterns and code recipes | [skills/skills.md](skills/skills.md) |
 | Deterministic utility code | [tools/tools.md](tools/tools.md) |
 | Slash commands | [.claude/commands/](.claude/commands/) |
+
+## Subagent Delegation
+
+Read [subagents/subagents.md](subagents/subagents.md) for the full delegation protocol.
+Run `/orient [task]` at session start to load all context before acting.
+
+### When to delegate
+
+Delegate a subtask when it:
+- Falls in a domain handled by a registered subagent (see §9 of subagents.md)
+- Can run independently in parallel with other work
+- Requires a distinct capability or isolated context window
+
+### CLI agents — headless invocation
+
+| Agent | Headless command | Best for |
+|-------|-----------------|----------|
+| Claude Code | `claude -p "<prompt>"` | Complex reasoning, multi-step code tasks |
+| Gemini | `gemini -p "<prompt>"` | Large-context analysis, multimodal inputs |
+| Codex | `codex exec "<prompt>"` | Code synthesis, repo-scoped generation |
+
+### Invocation rules
+
+1. Pass a **self-contained prompt** — never assume the subagent has prior session context.
+2. Include target file paths, relevant RULES.md constraints, and the expected output format.
+3. Validate subagent output before using it downstream.
+4. Subagents are workers, not authors — no git attribution from any subagent (RULES.md §6).
