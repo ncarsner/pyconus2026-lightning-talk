@@ -31,6 +31,7 @@ recipes, and code cookbooks. They are read on demand when an agent needs to know
 | [`legal-fiscal-analysis.md`](legal-fiscal-analysis.md) | Legal/Fiscal | Decimal arithmetic, tax rules, audit trails |
 | [`dashboarding-reporting.md`](dashboarding-reporting.md) | Dashboards | Matplotlib, Plotly, Dash, Excel patterns |
 | [`process-modernization.md`](process-modernization.md) | Automation | ETL, data quality, change detection |
+| [`STRATEGY.md`](../STRATEGY.md) | All | Multi-session phasing, skills caching, subagent decomposition |
 
 ---
 

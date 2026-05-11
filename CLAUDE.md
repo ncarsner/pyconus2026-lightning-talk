@@ -28,6 +28,8 @@ python3 -m pytest -x
 | Skill patterns and code recipes | [skills/skills.md](skills/skills.md) |
 | Deterministic utility code | [tools/tools.md](tools/tools.md) |
 | Slash commands | [.claude/commands/](.claude/commands/) |
+| Session efficiency strategy | [STRATEGY.md](STRATEGY.md) |
+| Domain-specific profiles (WAT, web design) | [profiles/](profiles/) |
 
 ## Subagent Delegation
 
