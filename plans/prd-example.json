@@ -1,0 +1,60 @@
+[
+  {
+    "task": "example-task-id",
+    "category": "efficiency | architecture | observability | quality | feature",
+    "priority": 1,
+    "done": false,
+    "description": "One sentence: what this task produces and why.",
+    "files_affected": ["path/to/file.md", "path/to/other.json"],
+    "acceptance_criteria": [
+      "Specific, verifiable condition that must be true when task is done",
+      "Another condition — written so an agent can check it without human input",
+      "File X contains section Y",
+      "Command Z exits 0"
+    ],
+    "steps": [
+      "Read the files relevant to this task",
+      "Identify the gap or change needed",
+      "Make the change",
+      "Verify acceptance criteria are met",
+      "Commit: <type>(<scope>): <imperative description>"
+    ]
+  },
+  {
+    "task": "example-shell-task",
+    "category": "quality",
+    "priority": 2,
+    "done": false,
+    "description": "Example task that involves a shell script.",
+    "files_affected": ["some-script.sh"],
+    "acceptance_criteria": [
+      "Script exits 0 on happy path",
+      "bash -n some-script.sh passes",
+      "Script handles missing argument with exit 1 and usage message"
+    ],
+    "steps": [
+      "Read the script",
+      "Identify missing cases",
+      "Edit script",
+      "Run bash -n to verify syntax",
+      "Commit: fix(scripts): handle missing argument in some-script.sh"
+    ]
+  },
+  {
+    "task": "example-python-task",
+    "category": "feature",
+    "priority": 3,
+    "done": true,
+    "description": "Example completed Python task — shows done:true for agent to skip.",
+    "files_affected": ["src/example.py", "tests/test_example.py"],
+    "acceptance_criteria": [
+      "ruff format src/example.py exits 0",
+      "ruff check src/example.py exits 0",
+      "mypy src/ exits 0",
+      "python3 -m pytest --cov=src --cov-fail-under=100 exits 0"
+    ],
+    "steps": [
+      "This task is already done. Agent should skip it."
+    ]
+  }
+]

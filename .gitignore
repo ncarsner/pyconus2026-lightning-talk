@@ -87,3 +87,7 @@ logs/
 secrets/
 *.pem
 *.key
+
+# Other
+plans/prd.json
+plans/progress.txt
