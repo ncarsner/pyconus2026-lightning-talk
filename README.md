@@ -26,8 +26,28 @@ agents-and-skills/
 ├── GEMINI.md                          # Gemini-specific root instructions
 ├── RULES.md                           # Mandatory compliance rules for all agents
 ├── STRATEGY.md                        # Repository strategy notes
+├── ralph.sh                           # Agent loop script — runs Claude tasks until success
 ├── _SCRIPTS/                          # Root-level utility and automation scripts
 ├── _SOLUTIONS/                        # Root-level solution and reference materials
+│
+├── .claude/
+│   └── skills/                        # Invokable slash commands (Claude Code)
+│       ├── ideate/                    # /ideate  — surface risks and edge cases
+│       ├── grill-me/                  # /grill-me — interview to shared understanding
+│       ├── prd/                       # /prd      — write a Product Requirements Document
+│       ├── prd-to-issues/             # /prd-to-issues — convert PRD to GitHub issues
+│       ├── ralph/                     # /ralph    — invoke ralph.sh agent loop
+│       ├── orient/                    # /orient   — bootstrap agent context
+│       ├── format/                    # /format   — ruff format + lint
+│       ├── test/                      # /test     — pytest with coverage
+│       ├── project-review/            # /project-review — multi-lens project audit
+│       ├── stress-test/               # /stress-test — stress-test a design or proposal
+│       ├── write-a-skill/             # /write-a-skill — scaffold a new skill
+│       └── caveman/                   # /caveman  — ultra-compressed responses
+│
+├── plans/                             # PRD and task-list files for ralph loops
+│   ├── prd.json                       # Active PRD task list (consumed by ralph --prd)
+│   └── test-coverage-ralph.sh         # Specialised coverage loop
 │
 ├── subagents/                         # Agent protocol and domain-specific guides
 │   ├── subagents.md                   # Base protocol all subagents must follow
@@ -53,8 +73,8 @@ agents-and-skills/
 │   ├── project-review-senior-dev.md           # Architectural efficiency review
 │   └── project-review-vp.md                   # Risk/reward tradeoff analysis
 │
-├── skills/                            # Skill registry and reusable patterns
-│   ├── skills.md                      # Skill registry, invocation contract, and templates
+├── skills/                            # Reference docs loaded by agents on demand
+│   ├── skills.md                      # Skill registry and slash command index
 │   ├── api-integration.md             # HTTP clients, retry, pagination
 │   ├── approved-packages.md           # Approved library list
 │   ├── cli-development.md             # argparse / click patterns
@@ -94,6 +114,51 @@ agents-and-skills/
 
 ---
 
+## Workflows
+
+### Idea-to-implementation pipeline
+
+Use the slash command pipeline to take a raw idea all the way to automated
+implementation via a series of Claude Code commands:
+
+```
+/ideate → /grill-me → /prd → /prd-to-issues → /ralph
+```
+
+| Step | Command | What it does |
+|------|---------|--------------|
+| 1 | `/ideate [idea]` | Surfaces risks, edge cases, and gaps using SWOT, premortem, and 5 Whys |
+| 2 | `/grill-me [topic]` | Interviews you one question at a time until reaching shared design understanding |
+| 3 | `/prd [project-name]` | Writes a structured PRD to `plans/<project>-prd.md` + task JSON to `plans/<project>-prd.json` |
+| 4 | `/prd-to-issues [prd-path]` | Converts the PRD into GitHub issues — previews before creating |
+| 5 | `/ralph --prd plans/<project>-prd.json` | Runs the `ralph.sh` agent loop to work through PRD tasks iteratively |
+
+### ralph.sh — agent loop
+
+`ralph.sh` at the repo root is a general-purpose agent loop that runs Claude
+against a task until it succeeds (or a max iteration cap is reached).
+
+```bash
+# Work through a PRD task list (recommended for pipeline output)
+./ralph.sh --prd plans/my-project-prd.json
+
+# Run a one-off task until success
+./ralph.sh "refactor src/pipeline.py to use dataclasses"
+
+# Load task from a goal file with an iteration cap
+./ralph.sh --goal goal.md --max 10
+
+# Override model or tools
+RALPH_MODEL=claude-opus-4-7 ./ralph.sh --prd plans/my-project-prd.json
+```
+
+In `--prd` mode the loop reads the task JSON each iteration, works the
+highest-priority incomplete task, marks it done, appends to a sibling
+`*-progress.txt` file, and commits. It exits automatically when all tasks are
+complete, with a safety cap of 20 iterations (override with `--max`).
+
+---
+
 ## Getting Started
 
 ### Reading the References
@@ -114,9 +179,19 @@ subagents/
 └── <agent-name>.md
 ```
 
-### Adding a New Skill
+### Adding a New Reference Skill
 
-Add an entry to the skill registry in `skills/skills.md` following the template at the bottom of that file, then create a corresponding detail file in `skills/`.
+Reference skills are markdown docs in `skills/` loaded by agents on demand — they are not invokable by users.
+
+1. Create `skills/<name>.md` following the pattern of an existing file.
+2. Add a row to the reference table in `skills/skills.md`.
+
+### Adding a New Slash Command
+
+Slash commands are invokable skills that live in `.claude/skills/` and appear as `/command-name` in Claude Code. Use `/write-a-skill` to scaffold one interactively, or follow these steps manually:
+
+1. Create `.claude/skills/<name>/SKILL.md` with the required frontmatter (`name`, `description`, `disable-model-invocation`, `allowed-tools`).
+2. Add a row to the invokable skills table in `skills/skills.md`.
 
 ---
 
@@ -165,5 +240,5 @@ mypy src/
 
 ## Credits
 
-The `/caveman` skill (`.claude/skills/caveman/`) is adapted from
-[Matt Pocock's skills library](https://github.com/mattpocock/skills/tree/main/skills/productivity/caveman).
+The `/caveman`, `/grill-me`, and `/write-a-skill` skills are adapted from
+[Matt Pocock's skills library](https://github.com/mattpocock/skills/tree/main/skills/productivity).
