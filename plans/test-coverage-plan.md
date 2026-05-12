@@ -30,11 +30,10 @@ Tests needed:
 - `--goal <file>` flag: reads task from file correctly
 - CTRL+C (SIGINT) during run: prompts retry/abort instead of hard exit
 
-### plans/ralph.sh
-File: `plans/ralph.sh`
+### plans/test-coverage-ralph.sh
+File: `plans/test-coverage-ralph.sh`
 Tests needed:
 - Exits 1 with usage message when iteration count not provided
-- Exits 0 immediately when all PRD tasks are already done:true
 - Detects `<promise>COMPLETE</promise>` and exits 0 before exhausting iterations
 - Iterates correct number of times without early exit when no completion signal
 
@@ -86,7 +85,7 @@ python3 -m pytest tests/test_<module>.py -v
 
 # Check shell script syntax
 bash -n ralph.sh
-bash -n plans/ralph.sh
+bash -n plans/test-coverage-ralph.sh
 
 # Install bats for shell testing (if testing .sh files beyond syntax)
 # brew install bats-core
@@ -99,5 +98,5 @@ bash -n plans/ralph.sh
 The test-coverage Ralph loop outputs `<promise>COMPLETE</promise>` when:
 1. All Python modules listed above show "Coverage status: COMPLETE"
 2. `python3 -m pytest --cov=src --cov-fail-under=100` exits 0
-3. `bash -n ralph.sh && bash -n plans/ralph.sh` both exit 0
+3. `bash -n ralph.sh && bash -n plans/test-coverage-ralph.sh` both exit 0
 4. `mypy src/` exits 0

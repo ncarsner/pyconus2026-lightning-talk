@@ -48,7 +48,7 @@ PROCESS — follow exactly, one step at a time:
 
 1. ASSESS coverage.
    Run: python3 -m pytest --cov=src --cov-report=term-missing -q 2>&1 || true
-   Also run: bash -n ralph.sh && bash -n plans/ralph.sh
+   Also run: bash -n ralph.sh && bash -n plans/test-coverage-ralph.sh
    If ALL of the following are true, output <promise>COMPLETE</promise> and stop:
      - pytest --cov=src --cov-fail-under=100 exits 0
      - bash -n on all .sh files exits 0

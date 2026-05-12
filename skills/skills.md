@@ -53,7 +53,7 @@ Run these in order to take a raw idea through to automated implementation:
 | 2 | grill-me | `/grill-me [topic]` | Interview relentlessly until reaching shared design understanding |
 | 3 | prd | `/prd [project-name]` | Synthesize conversation into a PRD + task JSON in `plans/` |
 | 4 | prd-to-issues | `/prd-to-issues [prd-path]` | Convert PRD to GitHub issues (preview before create) |
-| 5 | ralph | `/ralph [issues or --all]` | Invoke ralph.sh agent loop to iteratively resolve issues |
+| 5 | ralph | `/ralph --prd plans/<project>-prd.json` | Invoke ralph.sh PRD loop to work through tasks; also accepts issue numbers or `--all` |
 
 ### Utility skills
 
