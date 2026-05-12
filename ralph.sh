@@ -49,6 +49,8 @@ if [[ -n "$PRD_FILE" ]]; then
     [[ -f "$PRD_FILE" ]] || { echo "PRD file not found: $PRD_FILE" >&2; exit 1; }
     [[ "$MAX_ITERATIONS" -eq 0 ]] && MAX_ITERATIONS=20
     PROGRESS_FILE="${PRD_FILE%.json}-progress.txt"
+    mkdir -p "$(dirname "$PROGRESS_FILE")"
+    touch "$PROGRESS_FILE"
 elif [[ -n "$GOAL_FILE" ]]; then
     [[ -f "$GOAL_FILE" ]] || { echo "Goal file not found: $GOAL_FILE" >&2; exit 1; }
     TASK="$(cat "$GOAL_FILE")"
