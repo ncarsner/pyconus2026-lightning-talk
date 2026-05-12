@@ -39,13 +39,30 @@ recipes, and code cookbooks. They are read on demand when an agent needs to know
 
 These live in `.claude/skills/` and are called via `/skill-name`:
 
+### Idea-to-implementation pipeline
+
+Run these in order to take a raw idea through to automated implementation:
+
+```
+/ideate → /grill-me → /prd → /prd-to-issues → /ralph
+```
+
+| Step | Skill | Invocation | What it does |
+|------|-------|-----------|--------------|
+| 1 | ideate | `/ideate [idea]` | Surface risks, edge cases, and gaps before investing further |
+| 2 | grill-me | `/grill-me [topic]` | Interview relentlessly until reaching shared design understanding |
+| 3 | prd | `/prd [project-name]` | Synthesize conversation into a PRD + task JSON in `plans/` |
+| 4 | prd-to-issues | `/prd-to-issues [prd-path]` | Convert PRD to GitHub issues (preview before create) |
+| 5 | ralph | `/ralph [issues or --all]` | Invoke ralph.sh agent loop to iteratively resolve issues |
+
+### Utility skills
+
 | Skill | Invocation | What it does |
 |-------|-----------|--------------|
 | orient | `/orient [task]` | Bootstrap context: reads CLAUDE.md, RULES.md, subagent registry, skills index, and surveys repo structure |
 | format | `/format [path]` | `ruff format` + `ruff check --fix` |
 | test | `/test [flags]` | `pytest --cov=src --cov-fail-under=100` |
-| grill-me | `/grill-me [topic]` | Identify risks and gaps of a development proposal |
-| prd-to-issues | `/prd-to-issues [prd-path]` | Convert PRD to GitHub issues |
 | project-review | `/project-review [perspective]` | Structured multi-lens project audit |
 | stress-test | `/stress-test [topic]` | Stress-test a design, code, or proposal with hard questions |
+| write-a-skill | `/write-a-skill [name]` | Scaffold a new slash command skill with correct frontmatter and repo conventions |
 | caveman | `/caveman` | Ultra-compressed responses (~75% fewer tokens) |
