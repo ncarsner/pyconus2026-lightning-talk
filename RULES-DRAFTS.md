@@ -1,74 +1,70 @@
 # RULES-DRAFTS.md — Rules Under Development
 
-Draft rules pending human authorship and sign-off. Not enforced.
+Provisional rules pending human sign-off. Not yet enforced.
 Not referenced by any agent, skill, or orient step.
+
+Each section lists the intended rule statement and 2–3 enforceable defaults
+agents may apply until the rule is finalized and promoted to RULES.md.
 
 ---
 
 ## Placeholder: Performance Standards
 
-> **TODO:** Define acceptable response-time and throughput thresholds for
-> services, batch jobs, and CLI tools. Include profiling requirements and
-> guidance on when to escalate a performance regression to a human reviewer.
->
-> Suggested topics:
-> - Maximum acceptable latency for API endpoints (e.g., p95 < 200 ms)
-> - Batch job runtime budgets
-> - Memory usage limits
-> - When to use caching and which caching libraries are authorized
-> - Profiling tools (`cProfile`, `py-spy`, `memray`)
+**Pending rule:** Define latency, throughput, and memory budgets for services,
+batch jobs, and CLI tools.
+
+Provisional defaults (apply until overridden):
+- API endpoints: p95 latency < 500 ms; p99 < 1 s. Exceed these → escalate.
+- Batch jobs must declare a runtime budget in the task spec before starting.
+- Profiling (`cProfile` or `py-spy`) required before any optimization PR.
 
 ---
 
 ## Placeholder: Accessibility and Internationalization
 
-> **TODO:** Define rules for building accessible CLI and web interfaces,
-> including internationalization (i18n) requirements for user-facing strings.
->
-> Suggested topics:
-> - Locale and timezone handling (`zoneinfo`, `babel`)
-> - String externalization for i18n (`gettext` / `fluent`)
-> - WCAG compliance requirements for web UIs
-> - Accessibility testing tools
+**Pending rule:** Define accessibility and i18n requirements for user-facing
+CLI and web interfaces.
+
+Provisional defaults (apply until overridden):
+- All user-facing strings must be externalized; no hardcoded copy in logic layers.
+- Use timezone-aware datetimes only (`zoneinfo`); no naive `datetime` objects.
+- Web UIs must pass WCAG 2.1 AA automated checks before any shipping gate.
 
 ---
 
 ## Placeholder: Data Privacy and Compliance
 
-> **TODO:** Define data handling rules for projects that process personal,
-> financial, or legally sensitive data (PII, PHI, PCI, GDPR, CCPA).
->
-> Suggested topics:
-> - Data classification levels (public, internal, confidential, restricted)
-> - Required anonymization or pseudonymization steps
-> - Retention and deletion policies
-> - Audit trail requirements
-> - Applicable regulatory frameworks and how they map to code practices
+**Pending rule:** Define data classification and handling rules for projects
+that process personal, financial, or legally sensitive data.
+
+Provisional defaults (apply until overridden):
+- PII must not appear in logs at DEBUG or INFO level.
+- Any new data store must have a retention policy defined in the task spec.
+- Schema objects containing PII must carry a `confidential` or `restricted`
+  comment label.
 
 ---
 
 ## Placeholder: Deployment and Environment Parity
 
-> **TODO:** Define rules that ensure development, staging, and production
-> environments remain consistent.
->
-> Suggested topics:
-> - Required environment variables per deployment tier
-> - Docker / container image conventions
-> - CI/CD pipeline gates (must pass tests + lint + type-check before deploy)
-> - Feature flag management
-> - Blue/green or canary deployment patterns
+**Pending rule:** Define rules ensuring dev, staging, and production
+environments remain consistent.
+
+Provisional defaults (apply until overridden):
+- All required env vars must be documented in `.env-template` before deploy.
+- CI/CD pipeline must pass lint + type-check + tests before any deploy gate.
+- Container images must pin base image by digest, not a floating tag.
 
 ---
 
 ## Placeholder: Code Review and Approval Workflow
 
-> **TODO:** Define the human code review process that agents must trigger
-> before merging any changes.
->
-> Suggested topics:
-> - Minimum number of human approvals required per PR
-> - Automated checks that must pass before review is requested
-> - Review checklist items (security, performance, test coverage)
-> - Rules for handling reviewer disagreements
-> - Escalation path for architectural decisions
+**Pending rule:** Define the human review process agents must trigger before
+merging any changes.
+
+Provisional defaults (apply until overridden):
+- Minimum one human approval required before merging any agent-produced PR.
+- All automated checks (lint, type-check, tests, coverage) must pass before
+  requesting review.
+- Architectural decisions require explicit human sign-off; agents must escalate
+  rather than decide unilaterally.
