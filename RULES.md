@@ -20,11 +20,12 @@ non-negotiable unless explicitly overridden in writing by a human reviewer.
 10. [Logging and Observability](#10-logging-and-observability)
 11. [Architecture Boundaries](#11-architecture-boundaries)
 12. [Local-Only Agent Directory](#12-local-only-agent-directory)
-13. [Placeholder: Performance Standards](#placeholder-performance-standards)
-12. [Placeholder: Accessibility and Internationalization](#placeholder-accessibility-and-internationalization)
-13. [Placeholder: Data Privacy and Compliance](#placeholder-data-privacy-and-compliance)
-14. [Placeholder: Deployment and Environment Parity](#placeholder-deployment-and-environment-parity)
-15. [Placeholder: Code Review and Approval Workflow](#placeholder-code-review-and-approval-workflow)
+13. [AI Agent Compliance](#13-ai-agent-compliance)
+14. [Placeholder: Performance Standards](#placeholder-performance-standards)
+15. [Placeholder: Accessibility and Internationalization](#placeholder-accessibility-and-internationalization)
+16. [Placeholder: Data Privacy and Compliance](#placeholder-data-privacy-and-compliance)
+17. [Placeholder: Deployment and Environment Parity](#placeholder-deployment-and-environment-parity)
+18. [Placeholder: Code Review and Approval Workflow](#placeholder-code-review-and-approval-workflow)
 
 ---
 
@@ -444,9 +445,42 @@ never be committed to another repository. This repository is the master source.
 
 ---
 
+## 13. AI Agent Compliance
+
+**Rule:** All AI agents operating in this repository must observe the following
+directives in addition to every other rule in this file.
+
+### Identity and attribution
+
+- Never set `git config user.name` or `user.email` to an agent identity.
+- No `Co-Authored-By:` trailers or any agent attribution in commits, PRs, or
+  any version-control artifact (see §6).
+
+### Scope and escalation
+
+- Validate task scope before acting; reject out-of-scope requests with a clear
+  explanation.
+- Escalate to a human for any ambiguous, potentially destructive, or irreversible
+  action. Do not guess or proceed unilaterally.
+- Take the least-privilege action necessary — never modify files outside declared
+  scope without explicit human approval.
+
+### Session startup
+
+- Re-read `RULES.md` at the start of every session before acting.
+- Run `/orient [task]` to load full context; do not skip this step.
+
+### Decision-making and output
+
+- Every non-trivial decision must include a brief rationale in the response.
+- Never fabricate context, file paths, or behavior — request clarification instead.
+- If a skill invocation fails, log the error and halt unless a fallback is defined.
+
+---
+
 *Draft rules under development: see [RULES-DRAFTS.md](RULES-DRAFTS.md).*
 
 ---
 
-*Last updated: 2026-04-15. Maintained by the repository owner. All agents must
+*Last updated: 2026-05-14. Maintained by the repository owner. All agents must
 re-read this file at the start of every session.*
