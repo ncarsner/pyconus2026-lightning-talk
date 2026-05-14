@@ -94,7 +94,7 @@
     "task": "gitignore-session-pattern",
     "category": "chore",
     "priority": 5,
-    "done": false,
+    "done": true,
     "description": "Add *-session.md to .gitignore so session summary files are never staged",
     "files_affected": [".gitignore"],
     "acceptance_criteria": [
@@ -113,7 +113,7 @@
     "task": "remove-dated-root-files",
     "category": "chore",
     "priority": 6,
-    "done": false,
+    "done": true,
     "description": "Remove 6 tracked dated analysis files from repo root via git rm",
     "files_affected": [
       "2026-05-10-agents-refinement.md",
