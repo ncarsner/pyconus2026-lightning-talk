@@ -47,7 +47,7 @@
     "task": "epilogue-checklist-audit",
     "category": "docs",
     "priority": 3,
-    "done": false,
+    "done": true,
     "description": "Audit and update epilogue Step 7 closure checklist: drop 2 stale items, add 2 new items, reword 1",
     "files_affected": ["templates/epilogue.md"],
     "acceptance_criteria": [

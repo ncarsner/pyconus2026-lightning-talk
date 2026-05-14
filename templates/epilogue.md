@@ -296,18 +296,18 @@ report why they must remain uncommitted. Do not hide unresolved state.
 
 Report each item as done, skipped with reason, or blocked:
 
-- [ ] Dated summary file created with completed work, decisions, current state,
-      blockers, and next steps.
+- [ ] Session summary written locally (not staged — gitignored), with completed
+      work, decisions, current state, blockers, and next steps.
 - [ ] New or updated skill files written to `skills/` and registered in
       `skills/skills.md` (or skipped — no new patterns this session).
+- [ ] CHANGELOG.md updated with session entry, or skipped — nothing notable.
+- [ ] `.gitignore` includes `*-session.md` pattern.
 - [ ] Root context files (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`) updated where
       present; no new lowercase copies created.
 - [ ] Context files compared and synchronized where more than one exists.
-- [ ] Git repository exists locally.
-- [ ] `origin` remote exists and is reachable, or the blocker is documented.
 - [ ] Secrets and local-only files were checked before staging.
-- [ ] Intended changes were committed with a dated message, or there was nothing
-      to commit.
+- [ ] Intended changes were committed using Conventional Commits format
+      (RULES.md §6), or there was nothing to commit.
 - [ ] Current branch was pushed, or the push blocker is documented.
 - [ ] `git status` confirms clean working tree after push.
 - [ ] Final next steps are visible in the summary and final report.
