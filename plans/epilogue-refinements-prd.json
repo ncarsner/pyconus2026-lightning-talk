@@ -74,7 +74,7 @@
     "task": "epilogue-final-report",
     "category": "docs",
     "priority": 4,
-    "done": false,
+    "done": true,
     "description": "Update epilogue Step 8 Final Report template: add CHANGELOG field, remove Summary path field",
     "files_affected": ["templates/epilogue.md"],
     "acceptance_criteria": [

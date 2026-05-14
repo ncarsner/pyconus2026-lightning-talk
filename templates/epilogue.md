@@ -320,12 +320,12 @@ End with a compact report the user can scan quickly:
 
 ```text
 Session closed: yyyy-mm-dd
-Summary: <path-to-summary>
+Branch: <branch-name>
+Commit: <short-sha> — <commit message, or "no commit needed">
+Remote: <origin-url, or blocker>
+CHANGELOG: <updated | skipped — reason>
 Skills: <files created or updated, or "none — no new patterns this session">
 Context files: <updated files, or "none present">
-Commit: <short-sha> — <commit message, or "no commit needed">
-Branch: <branch-name>
-Remote: <origin-url, or blocker>
 Status: <clean / not clean with reason>
 
 Next steps:
