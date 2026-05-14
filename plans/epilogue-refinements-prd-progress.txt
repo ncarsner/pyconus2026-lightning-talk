@@ -1,0 +1,1 @@
+2026-05-14 iter=1 task=epilogue-changelog-step — inserted Step 4.5 (conditional CHANGELOG update) between Step 4 and old Step 5; renumbered Steps 5–8 to 6–9 in templates/epilogue.md

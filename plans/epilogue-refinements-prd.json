@@ -1,0 +1,139 @@
+[
+  {
+    "task": "epilogue-changelog-step",
+    "category": "docs",
+    "priority": 1,
+    "done": true,
+    "description": "Add Step 4.5 to templates/epilogue.md — conditional CHANGELOG update between Step 4 and Step 5",
+    "files_affected": ["templates/epilogue.md"],
+    "acceptance_criteria": [
+      "Step 4.5 section exists between Step 4 and Step 5",
+      "Step 4.5 is conditional — skip with documented reason if nothing notable",
+      "Step 4.5 specifies Added/Changed/Fixed format matching existing CHANGELOG.md",
+      "Step 4.5 entry is 3–8 bullets drawn from session context",
+      "Step numbering for Steps 5–8 updated to 6–9 accordingly"
+    ],
+    "steps": [
+      "Read templates/epilogue.md in full",
+      "Identify insertion point between Step 4 and Step 5",
+      "Draft Step 4.5 content: conditional intro, format spec, example entry",
+      "Renumber Steps 5–8 to Steps 6–9 throughout the file",
+      "Update Table of Contents if present",
+      "Commit: docs(epilogue): add conditional CHANGELOG update step"
+    ]
+  },
+  {
+    "task": "epilogue-step1-local-only",
+    "category": "docs",
+    "priority": 2,
+    "done": false,
+    "description": "Reword epilogue Step 1 to mark session summaries as local-only with *-session.md naming convention",
+    "files_affected": ["templates/epilogue.md"],
+    "acceptance_criteria": [
+      "Step 1 instructs agent to write locally, do not stage",
+      "Filename format updated to yyyy-mm-dd-<descriptor>-session.md",
+      "Step 1 explicitly states file is covered by .gitignore",
+      "No instruction to commit the summary file remains in Step 1"
+    ],
+    "steps": [
+      "Read templates/epilogue.md Step 1 section",
+      "Reword filename format to yyyy-mm-dd-<descriptor>-session.md",
+      "Add explicit note: 'Do not stage this file — it is covered by .gitignore'",
+      "Remove any commit instruction from Step 1",
+      "Commit: docs(epilogue): mark session summary as local-only with *-session.md naming"
+    ]
+  },
+  {
+    "task": "epilogue-checklist-audit",
+    "category": "docs",
+    "priority": 3,
+    "done": false,
+    "description": "Audit and update epilogue Step 7 closure checklist: drop 2 stale items, add 2 new items, reword 1",
+    "files_affected": ["templates/epilogue.md"],
+    "acceptance_criteria": [
+      "Checklist no longer contains 'Git repository exists locally' item",
+      "Checklist no longer contains 'origin remote exists and is reachable' item",
+      "Checklist contains 'CHANGELOG.md updated with session entry, or skipped — nothing notable'",
+      "Checklist contains '.gitignore includes *-session.md pattern'",
+      "Commit-message item references Conventional Commits per RULES.md §6",
+      "Commit-message item does not use the phrase 'dated message'",
+      "Summary item reworded to 'written locally (not staged — gitignored)'"
+    ],
+    "steps": [
+      "Read templates/epilogue.md Step 7 in full",
+      "Remove git-init check item",
+      "Remove origin-setup check item",
+      "Add CHANGELOG item after skills item",
+      "Add .gitignore item after CHANGELOG item",
+      "Reword commit-message item to reference Conventional Commits",
+      "Reword summary item to local-only language",
+      "Commit: docs(epilogue): audit closure checklist — drop stale items, add changelog and gitignore checks"
+    ]
+  },
+  {
+    "task": "epilogue-final-report",
+    "category": "docs",
+    "priority": 4,
+    "done": false,
+    "description": "Update epilogue Step 8 Final Report template: add CHANGELOG field, remove Summary path field",
+    "files_affected": ["templates/epilogue.md"],
+    "acceptance_criteria": [
+      "Final Report template contains 'CHANGELOG: <updated | skipped — reason>' field",
+      "Final Report template does not contain 'Summary: <path-to-summary>' field",
+      "All other existing fields (Branch, Commit, Remote, Skills, Context files, Status, Next steps) are preserved",
+      "Field order is logical: Session closed → Branch → Commit → Remote → CHANGELOG → Skills → Context files → Status → Next steps"
+    ],
+    "steps": [
+      "Read templates/epilogue.md Step 8 in full",
+      "Replace Summary field with CHANGELOG field",
+      "Verify all other fields present and correctly ordered",
+      "Commit: docs(epilogue): update final report template with changelog field"
+    ]
+  },
+  {
+    "task": "gitignore-session-pattern",
+    "category": "chore",
+    "priority": 5,
+    "done": false,
+    "description": "Add *-session.md to .gitignore so session summary files are never staged",
+    "files_affected": [".gitignore"],
+    "acceptance_criteria": [
+      ".gitignore contains '*-session.md' on its own line",
+      "Entry is placed in a logical section (local/temp files or similar)",
+      "Existing .gitignore entries are undisturbed"
+    ],
+    "steps": [
+      "Read .gitignore in full",
+      "Identify appropriate section for local/temp file patterns",
+      "Add '*-session.md' entry",
+      "Commit: chore: ignore *-session.md session summary files"
+    ]
+  },
+  {
+    "task": "remove-dated-root-files",
+    "category": "chore",
+    "priority": 6,
+    "done": false,
+    "description": "Remove 6 tracked dated analysis files from repo root via git rm",
+    "files_affected": [
+      "2026-05-10-agents-refinement.md",
+      "2026-05-10-claude-refinement.md",
+      "2026-05-10-gemini-refinement.md",
+      "2026-05-11-composite-refinement-a.md",
+      "2026-05-11-composite-refinement-c.md",
+      "2026-05-11-composite-refinement-g.md"
+    ],
+    "acceptance_criteria": [
+      "git ls-files | grep '^2026-05.*\\.md' returns empty at repo root",
+      "All 6 files are deleted from disk",
+      "No other files are accidentally removed",
+      "Removal committed with a clear message"
+    ],
+    "steps": [
+      "Run git ls-files to confirm all 6 files are tracked",
+      "Run git rm on each of the 6 files",
+      "Verify git status shows only the 6 deletions staged",
+      "Commit: chore: remove tracked dated analysis files from repo root"
+    ]
+  }
+]

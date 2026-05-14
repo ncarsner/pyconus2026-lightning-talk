@@ -187,7 +187,41 @@ do not replace it.
 
 ---
 
-## 5. Review, Stage, Commit, and Push
+## 4.5. Update CHANGELOG (if applicable)
+
+If the session produced anything a future reader would consider notable — a new
+feature, a bug fix, a breaking change, or a significant refactor — add an entry
+to `CHANGELOG.md` now, before the commit step.
+
+**When to skip:** If nothing this session would appear under Added, Changed, or
+Fixed in a public changelog, skip this step and document the reason in the
+Closure Checklist (e.g., "skipped — internal refactor only, nothing user-facing").
+
+**Format (match existing `CHANGELOG.md`):**
+
+```markdown
+## [Unreleased]
+
+### Added
+- Brief description of new capability or file.
+
+### Changed
+- Brief description of a behavior, interface, or default that changed.
+
+### Fixed
+- Brief description of a bug that was resolved.
+```
+
+Rules:
+- Draw 3–8 bullets from session context. Do not invent or embellish.
+- Omit sections that have no entries rather than leaving them empty.
+- Place the new entry under `## [Unreleased]` if that section exists; otherwise
+  add it above the most recent dated release heading.
+- Use present-tense imperative phrasing: "Add …", "Fix …", "Remove …".
+
+---
+
+## 6. Review, Stage, Commit, and Push
 
 Inspect the worktree before staging:
 
@@ -233,7 +267,7 @@ worktree had no staged changes and continue to the verification step.
 
 ---
 
-## 6. Verify Clean State
+## 7. Verify Clean State
 
 Run the final checks:
 
@@ -254,7 +288,7 @@ report why they must remain uncommitted. Do not hide unresolved state.
 
 ---
 
-## 7. Closure Checklist
+## 8. Closure Checklist
 
 Report each item as done, skipped with reason, or blocked:
 
@@ -276,7 +310,7 @@ Report each item as done, skipped with reason, or blocked:
 
 ---
 
-## 8. Final Report
+## 9. Final Report
 
 End with a compact report the user can scan quickly:
 
