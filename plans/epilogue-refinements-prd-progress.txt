@@ -1,1 +1,2 @@
 2026-05-14 iter=1 task=epilogue-changelog-step — inserted Step 4.5 (conditional CHANGELOG update) between Step 4 and old Step 5; renumbered Steps 5–8 to 6–9 in templates/epilogue.md
+2026-05-14 iter=2 task=epilogue-step1-local-only — updated filename format to yyyy-mm-dd-<descriptor>-session.md, added local-only/do-not-stage note citing .gitignore, updated naming examples table in templates/epilogue.md

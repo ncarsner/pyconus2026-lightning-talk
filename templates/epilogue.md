@@ -19,15 +19,19 @@ the project keeps session notes.
 Filename format:
 
 ```text
-yyyy-mm-dd-<content>.md
+yyyy-mm-dd-<descriptor>-session.md
 ```
 
 Rules:
 - Use ISO 8601 dates, such as `2026-04-27`.
-- Use a short kebab-case descriptor, such as `session-summary`,
-  `api-cleanup`, or `test-hardening`.
-- Default to `yyyy-mm-dd-session-summary.md` unless a more specific descriptor
+- Use a short kebab-case descriptor, such as `api-cleanup`,
+  `test-hardening`, or `schema-migration`.
+- Default to `yyyy-mm-dd-summary-session.md` unless a more specific descriptor
   makes the file easier to find later.
+
+**Write locally — do not stage this file.** Session files match the
+`*-session.md` pattern in `.gitignore` and must never be committed. Write the
+file, then continue to the next step.
 
 Required content:
 
@@ -337,14 +341,14 @@ honest handoff is mandatory.
 
 ## Naming Examples
 
-| Purpose              | Filename                                  |
-|----------------------|-------------------------------------------|
-| Session summary      | `2026-04-27-session-summary.md`           |
-| Architecture note    | `2026-04-27-api-boundary-design.md`       |
-| Bug investigation    | `2026-04-27-login-timeout-debugging.md`   |
-| Test work            | `2026-04-27-coverage-hardening.md`        |
-| Migration planning   | `2026-04-27-schema-migration-plan.md`     |
-| New skill file       | `skills/redis-caching.md`                 |
+| Purpose              | Filename                                      |
+|----------------------|-----------------------------------------------|
+| Session summary      | `2026-04-27-summary-session.md`               |
+| API cleanup session  | `2026-04-27-api-cleanup-session.md`           |
+| Bug investigation    | `2026-04-27-login-timeout-session.md`         |
+| Test work            | `2026-04-27-coverage-hardening-session.md`    |
+| Migration planning   | `2026-04-27-schema-migration-session.md`      |
+| New skill file       | `skills/redis-caching.md`                     |
 
 Use lowercase kebab-case after the date. Avoid spaces, underscores, and vague
 names like `notes.md`.

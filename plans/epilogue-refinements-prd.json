@@ -26,7 +26,7 @@
     "task": "epilogue-step1-local-only",
     "category": "docs",
     "priority": 2,
-    "done": false,
+    "done": true,
     "description": "Reword epilogue Step 1 to mark session summaries as local-only with *-session.md naming convention",
     "files_affected": ["templates/epilogue.md"],
     "acceptance_criteria": [
