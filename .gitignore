@@ -91,6 +91,6 @@ secrets/
 
 # Other
 plans/prd.json
-plans/*-progress.txt
+plans/*progress.txt
 plans/*-plan.md
 plans/*-prd*
