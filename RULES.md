@@ -519,7 +519,6 @@ Soft limit breach → log a `WARNING`. Hard limit breach → log `ERROR` and hal
 | Tool | Install | Best for |
 |------|---------|---------|
 | `cProfile` | stdlib | CPU-bound function hotspots |
-| `py-spy` | `uv add --dev py-spy` | Live profiling without code changes |
 | `memray` | `uv add --dev memray` | Memory allocation flamegraphs |
 
 Run profiling before claiming a performance fix. Attach the flamegraph to the PR.

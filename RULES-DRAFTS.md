@@ -16,7 +16,7 @@ batch jobs, and CLI tools.
 Provisional defaults (apply until overridden):
 - API endpoints: p95 latency < 500 ms; p99 < 1 s. Exceed these → escalate.
 - Batch jobs must declare a runtime budget in the task spec before starting.
-- Profiling (`cProfile` or `py-spy`) required before any optimization PR.
+- Profiling (`cProfile` or `memray`) required before any optimization PR.
 
 ---
 

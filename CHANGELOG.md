@@ -8,7 +8,7 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## 2026-05-15 (batch 2)
 
 ### Changed
-- `RULES.md §14` — filled "Performance Standards" placeholder: latency targets by workload type, memory limits (soft/hard), approved profiling tools (`cProfile`, `py-spy`, `memray`), approved caching libraries, regression escalation criteria.
+- `RULES.md §14` — filled "Performance Standards" placeholder: latency targets by workload type, memory limits (soft/hard), approved profiling tools (`cProfile`, `memray`), approved caching libraries, regression escalation criteria.
 - `RULES.md §16` — filled "Data Privacy and Compliance" placeholder: 4-level data classification, PII detection and redaction rules, anonymization techniques, retention/deletion policy by level, structured audit log schema, GDPR/CCPA/HIPAA obligation mapping.
 
 ---
