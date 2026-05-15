@@ -28,6 +28,7 @@ python3 -m pytest -x
 | Skill patterns and code recipes | [skills/skills.md](skills/skills.md) |
 | Deterministic utility code | [tools/tools.md](tools/tools.md) |
 | New project onboarding | [templates/onboarding-checklist.md](templates/onboarding-checklist.md) |
+| Containerization patterns | [skills/containerization.md](skills/containerization.md) |
 
 ## Changelog
 

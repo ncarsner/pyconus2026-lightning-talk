@@ -400,6 +400,95 @@ boundary only.
 
 ---
 
+## Property-Based Testing (Hypothesis)
+
+Apply to any module that: parses or serializes structured data, performs financial
+or decimal arithmetic, implements sorting/filtering/search, or validates user input.
+
+```bash
+uv add --dev hypothesis
+```
+
+```python
+from decimal import Decimal
+
+from hypothesis import given, settings
+from hypothesis import strategies as st
+
+from my_package.tax import calculate_tax
+
+
+@given(
+    income=st.decimals(min_value=0, max_value=1_000_000, places=2),
+    rate=st.decimals(min_value=0, max_value=1, places=4),
+)
+@settings(max_examples=500)
+def test_tax_never_negative(income: Decimal, rate: Decimal) -> None:
+    """Tax result must always be non-negative for valid inputs."""
+    result = calculate_tax(income, rate)
+    assert result >= Decimal("0")
+
+
+@given(st.text(min_size=0, max_size=1000))
+def test_parser_never_crashes(raw: str) -> None:
+    """Parser must handle any string without raising an unhandled exception."""
+    try:
+        parse_record(raw)
+    except ValueError:
+        pass  # expected for invalid input
+```
+
+### Hypothesis Strategies Quick Reference
+
+| Strategy | Use for |
+|----------|---------|
+| `st.integers()` | Integer inputs with optional bounds |
+| `st.decimals()` | Decimal arithmetic testing |
+| `st.text()` | String parsing robustness |
+| `st.lists(st.integers())` | Collection operations |
+| `st.sampled_from([...])` | Enumerated valid values |
+| `st.builds(MyClass, ...)` | Dataclass / model construction |
+
+---
+
+## Mutation Testing (mutmut)
+
+Mutation testing verifies that your tests actually catch logic errors, not just
+execute lines. Apply to modules with 100% unit coverage and financial/legal logic.
+
+```bash
+uv add --dev mutmut
+```
+
+```bash
+# Run against the src/ directory
+mutmut run --paths-to-mutate src/
+
+# Show summary
+mutmut results
+
+# Inspect a specific surviving mutant
+mutmut show <id>
+```
+
+### Interpreting Mutation Scores
+
+| Score | Interpretation |
+|-------|---------------|
+| 90–100% | Excellent — tests catch most logic errors |
+| 75–89% | Acceptable — review surviving mutants for assertion gaps |
+| < 75% | Investigate — surviving mutants indicate under-tested branches |
+
+### CI Integration
+
+Mutation testing is slow. Do not run it on every commit.
+
+- Run as a pre-release gate, not in standard CI.
+- To limit scope: `mutmut run --paths-to-mutate src/<changed-module>.py`
+- Set a minimum score in the release checklist rather than as a hard pipeline gate.
+
+---
+
 ## See Also
 
 - [`skills/python-linting.md`](python-linting.md)
