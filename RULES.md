@@ -24,7 +24,7 @@ non-negotiable unless explicitly overridden in writing by a human reviewer.
 14. [Placeholder: Performance Standards](#placeholder-performance-standards)
 15. [Placeholder: Accessibility and Internationalization](#placeholder-accessibility-and-internationalization)
 16. [Placeholder: Data Privacy and Compliance](#placeholder-data-privacy-and-compliance)
-17. [Placeholder: Deployment and Environment Parity](#placeholder-deployment-and-environment-parity)
+17. [Deployment and Environment Parity](#17-deployment-and-environment-parity)
 18. [Code Review and Approval Workflow](#18-code-review-and-approval-workflow)
 
 ---
@@ -483,6 +483,59 @@ directives in addition to every other rule in this file.
 - Every non-trivial decision must include a brief rationale in the response.
 - Never fabricate context, file paths, or behavior — request clarification instead.
 - If a skill invocation fails, log the error and halt unless a fallback is defined.
+
+---
+
+## 17. Deployment and Environment Parity
+
+**Rule:** All deployed services must maintain parity between local development,
+staging, and production. Differences must be limited to environment variable
+values — never to code paths, installed packages, or dependency versions.
+
+### Required Environment Variables per Tier
+
+| Variable | Local | Staging | Production |
+|----------|-------|---------|-----------|
+| `APP_ENV` | `development` | `staging` | `production` |
+| `LOG_LEVEL` | `DEBUG` | `INFO` | `WARNING` |
+| `DATABASE_URL` | local connection string | staging DB URL | prod DB URL |
+| `SECRET_KEY` | any local value | rotated secret | rotated secret |
+
+All required variables must be defined in `.env-template`. Actual values are
+never committed (RULES.md §8).
+
+### Local Development Setup
+
+Use Docker Compose for local multi-service development. See
+`skills/containerization.md` for the canonical `docker-compose.yml` pattern.
+
+```bash
+docker compose up --build   # start all services
+docker compose down         # tear down
+```
+
+### Mandatory CI/CD Gates
+
+All of the following must pass before any deployment proceeds:
+
+1. `pre-commit run --all-files` — secret scanning (§8)
+2. `ruff check .` — no lint errors
+3. `mypy src/` — no type errors
+4. `python3 -m pytest --cov=src --cov-fail-under=100` — full test suite at 100%
+5. `trivy image --exit-code 1 --severity HIGH,CRITICAL <image>:<tag>` — no critical CVEs
+
+No deployment may proceed if any gate fails.
+
+### Blue/Green Deployment Conventions
+
+1. Build and push the new image tagged with the git SHA: `<image>:<sha>`.
+2. Deploy to the green (inactive) environment.
+3. Run smoke tests against green before switching traffic.
+4. Switch the load balancer to green only when all smoke tests pass.
+5. Keep blue (previous version) running for one hour as a rollback target.
+6. Rollback trigger: 5xx error rate >1% sustained for 5 minutes → restore blue.
+
+Agents must not trigger a cutover without human approval (RULES.md §18).
 
 ---
 

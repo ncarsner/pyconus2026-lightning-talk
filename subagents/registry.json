@@ -348,6 +348,20 @@
       "domain": "all",
       "version": "1.0.0",
       "status": "active"
+    },
+    {
+      "file": "skills/containerization.md",
+      "name": "containerization",
+      "domain": "devops",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/python-testing.md",
+      "name": "python-testing",
+      "domain": "all",
+      "version": "1.2.0",
+      "status": "active"
     }
   ]
 }
