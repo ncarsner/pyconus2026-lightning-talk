@@ -54,6 +54,26 @@ INVOKE SKILL: <skill-name>
   ON ERROR: <halt | fallback-skill-name | ignore>
 ```
 
+## 4.1. Cross-Agent Skill Reuse
+
+Skills in `skills/` are shared across all registered agents. To reference a skill
+from any agent:
+
+- Name the skill file by its canonical path: `skills/<name>.md`.
+- In a headless prompt, include the relevant excerpt directly rather than assuming
+  the subagent can read files.
+- Never duplicate skill content inside an agent definition file — reference the
+  canonical `skills/` file to prevent drift between copies.
+- If a skill needs to be extended for a specific agent's domain, add a new section
+  to the skill file under a clearly labeled heading (e.g., `## For data-engineering-agent`).
+  Do not fork the file.
+
+Example reference in an agent prompt:
+
+```
+Follow the retry and backoff patterns defined in skills/api-integration.md §Rate Limiting.
+```
+
 ---
 
 ## 5. Output Format

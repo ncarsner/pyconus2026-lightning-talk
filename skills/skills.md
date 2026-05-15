@@ -23,6 +23,9 @@ recipes, and code cookbooks. They are read on demand when an agent needs to know
 | [`logging-observability.md`](logging-observability.md) | All | structlog, logging levels, audit trails |
 | [`configuration-management.md`](configuration-management.md) | All | Config file handling patterns |
 | [`github-issue-creation.md`](github-issue-creation.md) | All | GitHub issue authorization rules and `gh` commands |
+| [`secret-scanning.md`](secret-scanning.md) | All | Pre-commit hook setup, baseline management, incident remediation |
+| [`multi-agent.md`](multi-agent.md) | All | Handoff payload schema, context passing, loop detection, logging |
+| [`prompt-engineering.md`](prompt-engineering.md) | All | Prompt structure standards, injection defense, token efficiency |
 | [`cli-development.md`](cli-development.md) | CLI | Click/Typer patterns, terminal UI |
 | [`web-development.md`](web-development.md) | Web | FastAPI, Flask, Django patterns |
 | [`api-integration.md`](api-integration.md) | Data/Web | HTTP clients, retry, pagination |

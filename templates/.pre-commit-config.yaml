@@ -1,0 +1,29 @@
+# Pre-commit hook configuration for projects derived from agents-and-skills templates.
+#
+# Setup:
+#   uv add --dev pre-commit detect-secrets
+#   pre-commit install
+#   detect-secrets scan > .secrets.baseline
+#   git add .pre-commit-config.yaml .secrets.baseline
+#
+# Run manually against all files:
+#   pre-commit run --all-files
+#
+# Update hook versions:
+#   pre-commit autoupdate
+
+repos:
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]
+        exclude: (\.secrets\.baseline|uv\.lock|poetry\.lock)$
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: check-merge-conflict
