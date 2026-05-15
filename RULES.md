@@ -21,9 +21,9 @@ non-negotiable unless explicitly overridden in writing by a human reviewer.
 11. [Architecture Boundaries](#11-architecture-boundaries)
 12. [Local-Only Agent Directory](#12-local-only-agent-directory)
 13. [AI Agent Compliance](#13-ai-agent-compliance)
-14. [Placeholder: Performance Standards](#placeholder-performance-standards)
+14. [Performance Standards](#14-performance-standards)
 15. [Placeholder: Accessibility and Internationalization](#placeholder-accessibility-and-internationalization)
-16. [Placeholder: Data Privacy and Compliance](#placeholder-data-privacy-and-compliance)
+16. [Data Privacy and Compliance](#16-data-privacy-and-compliance)
 17. [Deployment and Environment Parity](#17-deployment-and-environment-parity)
 18. [Code Review and Approval Workflow](#18-code-review-and-approval-workflow)
 
@@ -486,6 +486,164 @@ directives in addition to every other rule in this file.
 
 ---
 
+## 14. Performance Standards
+
+**Rule:** All agents must design for performance from the start. Performance
+regressions introduced by an agent must be identified, documented, and resolved
+before the PR is merged.
+
+### Latency Targets
+
+| Workload type | Target | Measurement |
+|---------------|--------|-------------|
+| Synchronous API endpoint | p95 < 200 ms | Load test at expected peak QPS |
+| Background / async task | p95 < 2 s | End-to-end wall time |
+| Batch ETL job (per 10 k rows) | < 60 s | Wall time on reference hardware |
+| CLI command (interactive) | p95 < 500 ms | Cold-start wall time |
+
+Targets may be adjusted in the project's `AGENTS.md` with a written rationale.
+Exceeding a target by >2× requires escalation before shipping.
+
+### Memory Limits
+
+| Process type | Soft limit | Hard limit |
+|--------------|-----------|-----------|
+| API service (per worker) | 256 MB RSS | 512 MB RSS |
+| CLI tool | 128 MB RSS | 256 MB RSS |
+| Batch job | 1 GB RSS | 4 GB RSS |
+
+Soft limit breach → log a `WARNING`. Hard limit breach → log `ERROR` and halt.
+
+### Approved Profiling Tools
+
+| Tool | Install | Best for |
+|------|---------|---------|
+| `cProfile` | stdlib | CPU-bound function hotspots |
+| `memray` | `uv add --dev memray` | Memory allocation flamegraphs |
+
+Run profiling before claiming a performance fix. Attach the flamegraph to the PR.
+
+### Caching
+
+Approved caching libraries:
+
+| Library | Use case |
+|---------|---------|
+| `functools.lru_cache` / `functools.cache` | In-process memoization (stdlib) |
+| `diskcache` | Persistent cross-process local cache |
+| `redis-py` | Distributed cache / message broker |
+
+Do not cache secrets, PII, or session tokens (§16). Cache TTLs must be explicit —
+never cache indefinitely without a documented reason.
+
+### Regression Escalation
+
+A performance regression must be escalated to a human reviewer when:
+
+- A measured p95 latency increases by >25% vs. the prior release.
+- Memory usage increases by >50% vs. the prior release.
+- A batch job runtime budget is exceeded by >2×.
+
+Escalation means: open a GitHub issue tagged `perf`, block the PR, and notify
+the project owner before merging.
+
+---
+
+## 16. Data Privacy and Compliance
+
+**Rule:** All agents must handle personal and sensitive data according to the
+classification level, applicable regulatory frameworks, and the practices defined
+in this section. Non-compliance is a blocking defect.
+
+### Data Classification Levels
+
+| Level | Definition | Examples |
+|-------|-----------|---------|
+| **Public** | Intended for open publication | Documentation, marketing copy |
+| **Internal** | Not for external disclosure; no special controls | Internal metrics, system logs |
+| **Confidential** | Restricted access; limited retention | Business contracts, employee data |
+| **Restricted** | Highest sensitivity; strict controls + audit trail | PII, PHI, credentials, payment data |
+
+Agents must determine the classification level before writing any data handling
+code. When in doubt, treat as **Restricted**.
+
+### PII Detection and Handling
+
+Use `subagents/data-collection-agent.md` `PII_PATTERNS` as the baseline field
+name detection list. Additional detection rules:
+
+- Scan all inbound column names and JSON keys against the PII pattern list before
+  processing.
+- Never log Restricted or Confidential data. Redact before logging:
+  ```python
+  log.info("Processing record", user_id="[REDACTED]")
+  ```
+- Mask PII in error messages, stack traces, and exception payloads.
+- Do not write raw PII to intermediate files, temp dirs, or caches (§14).
+
+### Anonymization Requirements
+
+Before storing or transmitting Confidential/Restricted data downstream:
+
+| Technique | When to apply |
+|-----------|--------------|
+| Pseudonymization (hash + salt) | User IDs in analytics pipelines |
+| Tokenization | Payment card data |
+| Aggregation / generalization | Statistical reporting |
+| Suppression | Fields with <5 unique values in aggregate output |
+
+Hashing must use SHA-256 with a per-project salt stored in an environment
+variable (never hardcoded). See `tools/hashing-encoding.md`.
+
+### Retention and Deletion
+
+| Classification | Maximum retention | Deletion method |
+|---------------|------------------|----------------|
+| Public | Indefinite | N/A |
+| Internal | 2 years | Standard delete |
+| Confidential | 1 year | Secure delete + audit log |
+| Restricted | 90 days (or legal minimum) | Secure delete + audit log + confirmation |
+
+Agents must not retain Restricted data beyond the defined window. Implement a
+deletion job; do not rely on manual cleanup.
+
+### Audit Trail Requirements
+
+Any operation that reads, transforms, exports, or deletes Restricted data must
+emit a structured audit log entry containing:
+
+```python
+{
+    "event": "data_access",          # or data_export | data_delete | data_transform
+    "classification": "restricted",
+    "actor": "<agent_id or user_id>",
+    "timestamp": "<ISO-8601 UTC>",
+    "record_count": <int>,
+    "legal_basis": "<purpose>",      # e.g. "consent" | "contract" | "legal_obligation"
+    "destination": "<system or path>"
+}
+```
+
+Audit logs are **Internal** classification and must be retained for 2 years.
+
+### Regulatory Frameworks
+
+| Framework | Scope | Key agent obligations |
+|-----------|-------|----------------------|
+| **GDPR** | EU residents' personal data | Lawful basis required; data subject rights (access, deletion, portability); 72-hour breach notification |
+| **CCPA** | California residents' personal data | Right to know, opt-out of sale, deletion on request |
+| **HIPAA** | US protected health information (PHI) | PHI must be encrypted at rest and in transit; minimum necessary access; BAA required with third parties |
+
+When a project processes data under any of these frameworks:
+
+1. Document the applicable framework in the project's `AGENTS.md`.
+2. Implement the audit trail (above) for all Restricted data operations.
+3. Encrypt Restricted data at rest (AES-256) and in transit (TLS 1.2+).
+4. Never pass Restricted data to an external LLM API without explicit written
+   authorization from the data owner and legal review.
+
+---
+
 ## 17. Deployment and Environment Parity
 
 **Rule:** All deployed services must maintain parity between local development,
@@ -607,8 +765,10 @@ Architectural decisions require:
 
 | Date | Change |
 |------|--------|
+| 2026-05-15 | §14: Performance Standards filled — latency targets, memory limits, approved profiling tools, caching libraries, regression escalation criteria. |
+| 2026-05-15 | §16: Data Privacy and Compliance filled — classification levels, PII handling, anonymization, retention/deletion policy, audit trail schema, GDPR/CCPA/HIPAA obligations. |
 | 2026-05-14 | §8: pre-commit hook requirement made mandatory; reference to `skills/secret-scanning.md` and `templates/.pre-commit-config.yaml` added. Remediation steps expanded. |
-| 2026-05-14 | Initial version. Placeholder sections §14–§18 remain unfilled (see open GitHub issues). |
+| 2026-05-14 | Initial version. Placeholder sections §14–§16 remain unfilled (see open GitHub issues). §17 and §18 filled. |
 
 ---
 
