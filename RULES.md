@@ -347,13 +347,21 @@ source code or be committed to the repository.
 - Use `parameterized queries` for all database interactions — never use string
   concatenation to build SQL.
 - Validate and sanitize **all** external input before it reaches business logic.
-- Run `git-secrets` or `trufflehog` as a pre-commit hook if available.
+- Install `pre-commit` with `detect-secrets` on every new project before the first
+  commit. Copy `templates/.pre-commit-config.yaml` to the project root and follow
+  the setup steps in `skills/secret-scanning.md`. This is mandatory — not optional.
 
 ### If a secret is accidentally committed
 
-1. Immediately rotate/revoke the exposed credential.
-2. Use `git filter-branch` or `BFG Repo Cleaner` to scrub the history.
-3. Force-push the cleaned history and notify affected parties.
+This is a security incident. Follow the full remediation playbook in
+`skills/secret-scanning.md`. Summary:
+
+1. Immediately rotate/revoke the exposed credential — assume it is compromised.
+2. Scrub the history using BFG Repo Cleaner (preferred over `git filter-branch`).
+3. Force-push the cleaned history with human approval (see §6).
+4. Notify all parties with a clone of the repository.
+5. Audit access logs for use of the exposed credential.
+6. Document the incident in the project's incident log or PR.
 
 ---
 
@@ -479,6 +487,15 @@ directives in addition to every other rule in this file.
 ---
 
 *Draft rules under development: see [RULES-DRAFTS.md](RULES-DRAFTS.md).*
+
+---
+
+## Changelog
+
+| Date | Change |
+|------|--------|
+| 2026-05-14 | §8: pre-commit hook requirement made mandatory; reference to `skills/secret-scanning.md` and `templates/.pre-commit-config.yaml` added. Remediation steps expanded. |
+| 2026-05-14 | Initial version. Placeholder sections §14–§18 remain unfilled (see open GitHub issues). |
 
 ---
 

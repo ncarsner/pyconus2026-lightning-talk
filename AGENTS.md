@@ -27,3 +27,11 @@ python3 -m pytest -x
 | Subagent registry + delegation protocol | [subagents/subagents.md](subagents/subagents.md) |
 | Skill patterns and code recipes | [skills/skills.md](skills/skills.md) |
 | Deterministic utility code | [tools/tools.md](tools/tools.md) |
+| New project onboarding | [templates/onboarding-checklist.md](templates/onboarding-checklist.md) |
+
+## Changelog
+
+| Date | Change |
+|------|--------|
+| 2026-05-14 | Added onboarding checklist reference to resource table. |
+| 2026-05-14 | Initial version. |
