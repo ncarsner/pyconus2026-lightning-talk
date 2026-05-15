@@ -190,6 +190,15 @@
       "status": "active",
       "role": "Ad hoc review: logging, metrics, tracing, and audit log coverage",
       "skills_used": []
+    },
+    {
+      "file": "subagents/data-collection-agent.md",
+      "name": "data-collection-agent",
+      "domain": "data",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Audit and implement data collection pipelines: provenance, quality, PII, compliance",
+      "skills_used": ["api-integration", "database-access", "python-testing", "logging-observability", "configuration-management"]
     }
   ],
   "skills": [
@@ -309,6 +318,34 @@
       "file": "skills/process-modernization.md",
       "name": "process-modernization",
       "domain": "automation",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/cost-management.md",
+      "name": "cost-management",
+      "domain": "all",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/secret-scanning.md",
+      "name": "secret-scanning",
+      "domain": "all",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/multi-agent.md",
+      "name": "multi-agent",
+      "domain": "all",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/prompt-engineering.md",
+      "name": "prompt-engineering",
+      "domain": "all",
       "version": "1.0.0",
       "status": "active"
     }

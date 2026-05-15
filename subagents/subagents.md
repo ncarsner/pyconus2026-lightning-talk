@@ -232,6 +232,7 @@ modified to a new MINOR/MAJOR version, deprecated, or removed.
 | [`project-review-change-manager.md`](project-review-change-manager.md) | Ad hoc review: rollout readiness, rollback plans, and stakeholder communication |
 | [`project-review-interoperability.md`](project-review-interoperability.md) | Ad hoc review: API contracts, protocol correctness, and integration compatibility |
 | [`project-review-observability.md`](project-review-observability.md) | Ad hoc review: logging, metrics, tracing, and audit log coverage |
+| [`data-collection-agent.md`](data-collection-agent.md) | Audit and implement data collection pipelines: provenance, quality, PII, compliance |
 
 ---
 

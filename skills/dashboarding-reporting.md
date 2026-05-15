@@ -462,8 +462,104 @@ def test_load_and_validate_missing_columns(tmp_path: Path) -> None:
 
 ---
 
+## Structured Output Standards
+
+### Required Fields for Machine-Readable Reports
+
+Every report produced by an agent must include these fields regardless of format:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `report_id` | UUID4 string | Unique identifier for this report run |
+| `generated_at` | ISO 8601 UTC | Timestamp when the report was produced |
+| `source_agent` | string | Name of the agent that produced the report |
+| `status` | string | `success`, `partial`, or `failed` |
+| `record_count` | integer | Number of data rows in the report |
+| `format` | string | `json`, `csv`, `xlsx`, `html`, or `pdf` |
+
+### Approved Libraries by Format
+
+| Format | Library | Install | Notes |
+|--------|---------|---------|-------|
+| JSON | stdlib `json` | built-in | Use for machine-readable output |
+| CSV | stdlib `csv` or `pandas` | built-in | Always include a header row |
+| Excel (.xlsx) | `openpyxl` | `uv add openpyxl` | Freeze header row; auto-size columns |
+| Interactive HTML | `plotly` | `uv add plotly` | Export via `fig.write_html()` |
+| Static HTML | `jinja2` | `uv add jinja2` | Templated email-safe reports |
+| PDF (HTML-based) | `weasyprint` | `uv add weasyprint` | Preferred for print-quality PDF |
+| PDF (complex layout) | `reportlab` | `uv add reportlab` | Use when pixel-level layout control is required |
+
+### Report Manifest Schema
+
+Agents that produce reports must write a sidecar manifest file
+(`<report-stem>-manifest.json`) alongside the report output:
+
+```json
+{
+  "report_id": "<uuid4>",
+  "generated_at": "<ISO 8601 UTC>",
+  "source_agent": "<agent-name>",
+  "status": "success",
+  "record_count": 1234,
+  "format": "xlsx",
+  "output_path": "reports/2026-05-15-monthly-summary.xlsx",
+  "schema_version": "1.0.0",
+  "filters_applied": {}
+}
+```
+
+### Manifest Builder
+
+```python
+import json
+import uuid
+from datetime import UTC, datetime
+from pathlib import Path
+
+
+def write_manifest(
+    output_path: Path,
+    source_agent: str,
+    record_count: int,
+    fmt: str,
+    status: str = "success",
+    schema_version: str = "1.0.0",
+    filters_applied: dict | None = None,
+) -> Path:
+    """Write a sidecar manifest file for a generated report.
+
+    Args:
+        output_path: Path to the generated report file.
+        source_agent: Name of the agent that produced the report.
+        record_count: Number of data rows in the report.
+        fmt: Format string: json, csv, xlsx, html, or pdf.
+        status: success, partial, or failed.
+        schema_version: Schema version of the report format.
+        filters_applied: Filters used to produce this report.
+
+    Returns:
+        Path to the written manifest file.
+    """
+    manifest = {
+        "report_id": str(uuid.uuid4()),
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source_agent": source_agent,
+        "status": status,
+        "record_count": record_count,
+        "format": fmt,
+        "output_path": str(output_path),
+        "schema_version": schema_version,
+        "filters_applied": filters_applied or {},
+    }
+    manifest_path = output_path.with_name(f"{output_path.stem}-manifest.json")
+    manifest_path.write_text(json.dumps(manifest, indent=2))
+    return manifest_path
+```
+
+---
+
 ## See Also
 
-- [`agents/dashboard-reporting-agent.md`](../agents/dashboard-reporting-agent.md)
+- [`subagents/dashboard-reporting-agent.md`](../subagents/dashboard-reporting-agent.md)
 - [`skills/python-testing.md`](python-testing.md)
 - [`templates/pyproject.toml`](../templates/pyproject.toml)
