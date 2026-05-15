@@ -29,6 +29,7 @@ python3 -m pytest -x
 | Deterministic utility code | [tools/tools.md](tools/tools.md) |
 | New project onboarding | [templates/onboarding-checklist.md](templates/onboarding-checklist.md) |
 | Containerization patterns | [skills/containerization.md](skills/containerization.md) |
+| Session shutdown protocol | [templates/epilogue.md](templates/epilogue.md) |
 
 ## Changelog
 
