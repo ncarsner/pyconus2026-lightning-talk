@@ -19,15 +19,19 @@ the project keeps session notes.
 Filename format:
 
 ```text
-yyyy-mm-dd-<content>.md
+yyyy-mm-dd-<descriptor>-session.md
 ```
 
 Rules:
 - Use ISO 8601 dates, such as `2026-04-27`.
-- Use a short kebab-case descriptor, such as `session-summary`,
-  `api-cleanup`, or `test-hardening`.
-- Default to `yyyy-mm-dd-session-summary.md` unless a more specific descriptor
+- Use a short kebab-case descriptor, such as `api-cleanup`,
+  `test-hardening`, or `schema-migration`.
+- Default to `yyyy-mm-dd-summary-session.md` unless a more specific descriptor
   makes the file easier to find later.
+
+**Write locally — do not stage this file.** Session files match the
+`*-session.md` pattern in `.gitignore` and must never be committed. Write the
+file, then continue to the next step.
 
 Required content:
 
@@ -187,7 +191,41 @@ do not replace it.
 
 ---
 
-## 5. Review, Stage, Commit, and Push
+## 4.5. Update CHANGELOG (if applicable)
+
+If the session produced anything a future reader would consider notable — a new
+feature, a bug fix, a breaking change, or a significant refactor — add an entry
+to `CHANGELOG.md` now, before the commit step.
+
+**When to skip:** If nothing this session would appear under Added, Changed, or
+Fixed in a public changelog, skip this step and document the reason in the
+Closure Checklist (e.g., "skipped — internal refactor only, nothing user-facing").
+
+**Format (match existing `CHANGELOG.md`):**
+
+```markdown
+## [Unreleased]
+
+### Added
+- Brief description of new capability or file.
+
+### Changed
+- Brief description of a behavior, interface, or default that changed.
+
+### Fixed
+- Brief description of a bug that was resolved.
+```
+
+Rules:
+- Draw 3–8 bullets from session context. Do not invent or embellish.
+- Omit sections that have no entries rather than leaving them empty.
+- Place the new entry under `## [Unreleased]` if that section exists; otherwise
+  add it above the most recent dated release heading.
+- Use present-tense imperative phrasing: "Add …", "Fix …", "Remove …".
+
+---
+
+## 6. Review, Stage, Commit, and Push
 
 Inspect the worktree before staging:
 
@@ -233,7 +271,7 @@ worktree had no staged changes and continue to the verification step.
 
 ---
 
-## 6. Verify Clean State
+## 7. Verify Clean State
 
 Run the final checks:
 
@@ -254,40 +292,40 @@ report why they must remain uncommitted. Do not hide unresolved state.
 
 ---
 
-## 7. Closure Checklist
+## 8. Closure Checklist
 
 Report each item as done, skipped with reason, or blocked:
 
-- [ ] Dated summary file created with completed work, decisions, current state,
-      blockers, and next steps.
+- [ ] Session summary written locally (not staged — gitignored), with completed
+      work, decisions, current state, blockers, and next steps.
 - [ ] New or updated skill files written to `skills/` and registered in
       `skills/skills.md` (or skipped — no new patterns this session).
+- [ ] CHANGELOG.md updated with session entry, or skipped — nothing notable.
+- [ ] `.gitignore` includes `*-session.md` pattern.
 - [ ] Root context files (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`) updated where
       present; no new lowercase copies created.
 - [ ] Context files compared and synchronized where more than one exists.
-- [ ] Git repository exists locally.
-- [ ] `origin` remote exists and is reachable, or the blocker is documented.
 - [ ] Secrets and local-only files were checked before staging.
-- [ ] Intended changes were committed with a dated message, or there was nothing
-      to commit.
+- [ ] Intended changes were committed using Conventional Commits format
+      (RULES.md §6), or there was nothing to commit.
 - [ ] Current branch was pushed, or the push blocker is documented.
 - [ ] `git status` confirms clean working tree after push.
 - [ ] Final next steps are visible in the summary and final report.
 
 ---
 
-## 8. Final Report
+## 9. Final Report
 
 End with a compact report the user can scan quickly:
 
 ```text
 Session closed: yyyy-mm-dd
-Summary: <path-to-summary>
+Branch: <branch-name>
+Commit: <short-sha> — <commit message, or "no commit needed">
+Remote: <origin-url, or blocker>
+CHANGELOG: <updated | skipped — reason>
 Skills: <files created or updated, or "none — no new patterns this session">
 Context files: <updated files, or "none present">
-Commit: <short-sha> — <commit message, or "no commit needed">
-Branch: <branch-name>
-Remote: <origin-url, or blocker>
 Status: <clean / not clean with reason>
 
 Next steps:
@@ -303,14 +341,14 @@ honest handoff is mandatory.
 
 ## Naming Examples
 
-| Purpose              | Filename                                  |
-|----------------------|-------------------------------------------|
-| Session summary      | `2026-04-27-session-summary.md`           |
-| Architecture note    | `2026-04-27-api-boundary-design.md`       |
-| Bug investigation    | `2026-04-27-login-timeout-debugging.md`   |
-| Test work            | `2026-04-27-coverage-hardening.md`        |
-| Migration planning   | `2026-04-27-schema-migration-plan.md`     |
-| New skill file       | `skills/redis-caching.md`                 |
+| Purpose              | Filename                                      |
+|----------------------|-----------------------------------------------|
+| Session summary      | `2026-04-27-summary-session.md`               |
+| API cleanup session  | `2026-04-27-api-cleanup-session.md`           |
+| Bug investigation    | `2026-04-27-login-timeout-session.md`         |
+| Test work            | `2026-04-27-coverage-hardening-session.md`    |
+| Migration planning   | `2026-04-27-schema-migration-session.md`      |
+| New skill file       | `skills/redis-caching.md`                     |
 
 Use lowercase kebab-case after the date. Avoid spaces, underscores, and vague
 names like `notes.md`.
