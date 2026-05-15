@@ -275,6 +275,119 @@ exclude_lines = [
 
 ---
 
+## Integration & End-to-End Tests
+
+### Boundary: What to Mock vs. Hit Live
+
+| Boundary type | Unit tests | Integration tests |
+|---------------|-----------|------------------|
+| External HTTP APIs | Always mock | Mock with approved library |
+| Database (SQLite) | In-memory or mock | Real in-memory instance |
+| Database (Postgres/MySQL) | Mock | Real test instance (Docker) |
+| File system | `tmp_path` fixture | `tmp_path` fixture |
+| Environment variables | `monkeypatch` | `monkeypatch` |
+| Time / datetime | `freezegun` | `freezegun` |
+| Third-party SDK | Mock | Mock unless testing the integration itself |
+
+**Rule:** Integration tests hit real boundaries within the repo's control
+(in-memory DBs, `tmp_path`). They mock boundaries outside the repo's control
+(external APIs, third-party services).
+
+### Directory and Marker
+
+```
+tests/
+├── conftest.py
+├── unit/
+│   └── test_<module>.py
+└── integration/
+    ├── conftest.py          # integration-specific fixtures (e.g., test DB setup)
+    └── test_<feature>.py
+```
+
+Mark all integration tests:
+
+```python
+@pytest.mark.integration
+def test_pipeline_writes_to_database(test_db_url: str) -> None:
+    """Full pipeline run should persist a record to the test database."""
+    ...
+```
+
+Run integration tests in isolation:
+
+```bash
+python3 -m pytest tests/integration/ -m integration
+```
+
+### Coverage Minimum
+
+| Tier | Minimum | Enforcement |
+|------|---------|------------|
+| Unit tests | 100% | `--cov-fail-under=100` in CI |
+| Integration tests | 80% of integration-boundary paths | Advisory; document gaps with `# pragma: no cover` and reason |
+
+### Approved HTTP Mocking Libraries
+
+| Library | Install | Best for |
+|---------|---------|---------|
+| `pytest-httpx` | `uv add --dev pytest-httpx` | `httpx`-based clients (recommended) |
+| `responses` | `uv add --dev responses` | `requests`-based clients |
+
+Do not use `httpretty` — it patches at the socket level and can cause test
+isolation failures when run alongside other mocking tools.
+
+#### pytest-httpx example
+
+```python
+import pytest
+from httpx import AsyncClient
+
+from my_package.client import fetch_user
+
+
+@pytest.mark.asyncio
+@pytest.mark.integration
+async def test_fetch_user_returns_name(httpx_mock) -> None:
+    """HTTP client should parse name from a mocked API response."""
+    httpx_mock.add_response(json={"id": 1, "name": "Alice"})
+    result = await fetch_user(client=AsyncClient(), user_id=1)
+    assert result.name == "Alice"
+```
+
+#### responses example
+
+```python
+import responses
+
+
+@responses.activate
+@pytest.mark.integration
+def test_fetch_weather_returns_temperature() -> None:
+    """Should extract temperature from a mocked weather API response."""
+    responses.add(
+        responses.GET,
+        "https://api.weather.example.com/current",
+        json={"temp": 295.15},
+        status=200,
+    )
+    result = fetch_weather()
+    assert result.temperature_kelvin == 295.15
+```
+
+### When E2E Tests Are Required
+
+Write an E2E test when:
+- A CLI command orchestrates multiple modules end-to-end.
+- A workflow spans multiple external API calls (auth → fetch → transform → store).
+- A regression in the full pipeline has been reported and fixed.
+
+E2E tests live in `tests/integration/` with the `@pytest.mark.integration` marker.
+Use live third-party sandboxes when available; otherwise mock at the outermost
+boundary only.
+
+---
+
 ## Test Quality Checklist
 
 - [ ] Every public function has at least one test

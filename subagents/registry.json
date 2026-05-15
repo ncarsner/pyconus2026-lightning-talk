@@ -1,0 +1,316 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-05-15",
+  "agents": [
+    {
+      "file": "subagents/cli-agent.md",
+      "name": "cli-agent",
+      "domain": "cli",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Build terminal-based CLI tools",
+      "skills_used": ["cli-development", "python-testing", "python-formatting", "python-linting"]
+    },
+    {
+      "file": "subagents/web-dev-agent.md",
+      "name": "web-dev-agent",
+      "domain": "web",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Build REST APIs and web services",
+      "skills_used": ["web-development", "api-integration", "python-testing", "python-formatting"]
+    },
+    {
+      "file": "subagents/data-engineering-agent.md",
+      "name": "data-engineering-agent",
+      "domain": "data",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Build ETL pipelines and database integrations",
+      "skills_used": ["database-access", "api-integration", "process-modernization", "python-testing"]
+    },
+    {
+      "file": "subagents/nlp-agent.md",
+      "name": "nlp-agent",
+      "domain": "nlp",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Build NLP and text-analysis systems",
+      "skills_used": ["nlp-processing", "python-testing", "python-formatting"]
+    },
+    {
+      "file": "subagents/legal-fiscal-agent.md",
+      "name": "legal-fiscal-agent",
+      "domain": "legal-fiscal",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Analyze legal documents and financial data",
+      "skills_used": ["legal-fiscal-analysis", "python-testing", "logging-observability"]
+    },
+    {
+      "file": "subagents/dashboard-reporting-agent.md",
+      "name": "dashboard-reporting-agent",
+      "domain": "dashboards",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Build dashboards and generate reports",
+      "skills_used": ["dashboarding-reporting", "python-testing", "python-formatting"]
+    },
+    {
+      "file": "subagents/process-modernization-agent.md",
+      "name": "process-modernization-agent",
+      "domain": "automation",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Modernize legacy processes",
+      "skills_used": ["process-modernization", "database-access", "python-testing"]
+    },
+    {
+      "file": "subagents/security-agent.md",
+      "name": "security-agent",
+      "domain": "security",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Audit and harden application security",
+      "skills_used": ["python-testing", "logging-observability", "configuration-management"]
+    },
+    {
+      "file": "subagents/testing-agent.md",
+      "name": "testing-agent",
+      "domain": "testing",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Design and implement test suites",
+      "skills_used": ["python-testing", "python-formatting", "python-linting"]
+    },
+    {
+      "file": "subagents/containerization-agent.md",
+      "name": "containerization-agent",
+      "domain": "devops",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Containerize projects with Docker; guide deployment and maintenance",
+      "skills_used": ["configuration-management", "python-testing"]
+    },
+    {
+      "file": "subagents/accounting-agent.md",
+      "name": "accounting-agent",
+      "domain": "cost-management",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Monitor token usage and estimate cost",
+      "skills_used": ["logging-observability"]
+    },
+    {
+      "file": "subagents/project-review-senior-dev.md",
+      "name": "project-review-senior-dev",
+      "domain": "project-review",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Ad hoc review: architectural efficiency and code quality",
+      "skills_used": []
+    },
+    {
+      "file": "subagents/project-review-vp.md",
+      "name": "project-review-vp",
+      "domain": "project-review",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Ad hoc review: risk/reward tradeoffs",
+      "skills_used": []
+    },
+    {
+      "file": "subagents/project-review-cto.md",
+      "name": "project-review-cto",
+      "domain": "project-review",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Ad hoc review: C-suite strategic overview",
+      "skills_used": []
+    },
+    {
+      "file": "subagents/project-review-accessibility.md",
+      "name": "project-review-accessibility",
+      "domain": "project-review",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Identify accessibility deficiencies in public-facing projects and publications",
+      "skills_used": []
+    },
+    {
+      "file": "subagents/project-review-pm.md",
+      "name": "project-review-pm",
+      "domain": "project-review",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Ad hoc review: product value, acceptance criteria, and release readiness",
+      "skills_used": []
+    },
+    {
+      "file": "subagents/project-review-enterprise-architect.md",
+      "name": "project-review-enterprise-architect",
+      "domain": "project-review",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Ad hoc review: org-wide architecture standards and integration governance",
+      "skills_used": []
+    },
+    {
+      "file": "subagents/project-review-scrum-master.md",
+      "name": "project-review-scrum-master",
+      "domain": "project-review",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Ad hoc review: sprint health, Definition of Done, and delivery process",
+      "skills_used": []
+    },
+    {
+      "file": "subagents/project-review-change-manager.md",
+      "name": "project-review-change-manager",
+      "domain": "project-review",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Ad hoc review: rollout readiness, rollback plans, and stakeholder communication",
+      "skills_used": []
+    },
+    {
+      "file": "subagents/project-review-interoperability.md",
+      "name": "project-review-interoperability",
+      "domain": "project-review",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Ad hoc review: API contracts, protocol correctness, and integration compatibility",
+      "skills_used": []
+    },
+    {
+      "file": "subagents/project-review-observability.md",
+      "name": "project-review-observability",
+      "domain": "project-review",
+      "version": "1.0.0",
+      "status": "active",
+      "role": "Ad hoc review: logging, metrics, tracing, and audit log coverage",
+      "skills_used": []
+    }
+  ],
+  "skills": [
+    {
+      "file": "skills/python-formatting.md",
+      "name": "python-formatting",
+      "domain": "all",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/python-linting.md",
+      "name": "python-linting",
+      "domain": "all",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/python-testing.md",
+      "name": "python-testing",
+      "domain": "all",
+      "version": "1.1.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/python-uv-workflow.md",
+      "name": "python-uv-workflow",
+      "domain": "all",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/approved-packages.md",
+      "name": "approved-packages",
+      "domain": "all",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/error-handling.md",
+      "name": "error-handling",
+      "domain": "all",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/logging-observability.md",
+      "name": "logging-observability",
+      "domain": "all",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/configuration-management.md",
+      "name": "configuration-management",
+      "domain": "all",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/github-issue-creation.md",
+      "name": "github-issue-creation",
+      "domain": "all",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/cli-development.md",
+      "name": "cli-development",
+      "domain": "cli",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/web-development.md",
+      "name": "web-development",
+      "domain": "web",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/api-integration.md",
+      "name": "api-integration",
+      "domain": "data-web",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/database-access.md",
+      "name": "database-access",
+      "domain": "data-web",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/nlp-processing.md",
+      "name": "nlp-processing",
+      "domain": "nlp",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/legal-fiscal-analysis.md",
+      "name": "legal-fiscal-analysis",
+      "domain": "legal-fiscal",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/dashboarding-reporting.md",
+      "name": "dashboarding-reporting",
+      "domain": "dashboards",
+      "version": "1.0.0",
+      "status": "active"
+    },
+    {
+      "file": "skills/process-modernization.md",
+      "name": "process-modernization",
+      "domain": "automation",
+      "version": "1.0.0",
+      "status": "active"
+    }
+  ]
+}
