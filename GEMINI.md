@@ -23,7 +23,8 @@ python3 -m pytest -x
 
 When a task is highly complex, requires specialized reasoning, or benefits from parallel execution, you may deploy external subagents in headless mode via CLI:
 
-- **Claude (Headless):** Invoke as `claude -p "<prompt>" --allowedTools "Read,Edit,Bash"`. Use for multi-file refactors, deep architectural analysis, or research.
+- **Claude (Headless):** Invoke as `claude -p "<prompt>" --allowedTools "Read,Edit,Bash"`. Note: `-p` is a boolean flag for "print and exit"; the prompt is a positional argument.
+- **Gemini (Headless):** Invoke as `gemini -p "<prompt>"`. Note: `-p` requires the prompt as an immediate argument.
 - **Codex (Headless):** Invoke as `codex exec "<prompt>"`. Use for surgical code generation, unit test creation, or deterministic translations.
 
 All external agent output must be treated as "Result" data and integrated into the session following the [subagents/subagents.md](subagents/subagents.md) protocol.

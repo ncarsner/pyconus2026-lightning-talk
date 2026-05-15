@@ -47,8 +47,8 @@ Delegate a subtask when it:
 
 | Agent | Headless command | Best for |
 |-------|-----------------|----------|
-| Claude Code | `claude -p "<prompt>"` | Complex reasoning, multi-step code tasks |
-| Gemini | `gemini -p "<prompt>"` | Large-context analysis, multimodal inputs |
+| Claude Code | `claude -p "<prompt>"` | Complex reasoning. Note: `-p` is boolean. |
+| Gemini | `gemini -p "<prompt>"` | Large-context analysis. Note: `-p` requires a value. |
 | Codex | `codex exec "<prompt>"` | Code synthesis, repo-scoped generation |
 
 ### Invocation rules
