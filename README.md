@@ -25,6 +25,8 @@ agents-and-skills/
 ├── CLAUDE.md                          # Claude-specific root instructions
 ├── GEMINI.md                          # Gemini-specific root instructions
 ├── RULES.md                           # Mandatory compliance rules for all agents
+├── RULES-DRAFTS.md                    # Provisional rules under development
+├── CHANGELOG.md                       # Notable changes by date
 ├── STRATEGY.md                        # Repository strategy notes
 ├── ralph.sh                           # Agent loop script — runs Claude tasks until success
 ├── _SCRIPTS/                          # Root-level utility and automation scripts
@@ -105,7 +107,7 @@ agents-and-skills/
 │   └── string-processing.md           # Slugify, regex extraction, normalization
 │
 └── templates/                         # Ready-to-copy configuration files
-    ├── epilogue.md                    # Handoff and repository finalization checklist
+    ├── epilogue.md                    # Session shutdown protocol — run when closing a session
     ├── pyproject.toml                 # Full project config (pytest, ruff, mypy)
     ├── pytest.ini                     # Standalone pytest config
     ├── ruff.toml                      # Standalone ruff linter/formatter config
@@ -156,6 +158,20 @@ In `--prd` mode the loop reads the task JSON each iteration, works the
 highest-priority incomplete task, marks it done, appends to a sibling
 `*-progress.txt` file, and commits. It exits automatically when all tasks are
 complete, with a safety cap of 20 iterations (override with `--max`).
+
+### Closing a session
+
+When finishing a session, run the shutdown protocol to capture work, update
+context files, and leave the repo in a clean state:
+
+```
+templates/epilogue.md
+```
+
+The protocol covers: session summary, skill updates, context file refresh,
+git commit and push, and a final clean-state verification. All root context
+files (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`) link to this file under
+"On-demand resources → Session shutdown protocol."
 
 ---
 
