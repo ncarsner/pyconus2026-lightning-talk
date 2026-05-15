@@ -154,6 +154,59 @@ To add a new agent to this project:
 
 ---
 
+## 8.1. Agent and Skill Versioning
+
+### Version Field
+
+Every agent and skill file should declare its version in the header:
+
+```
+**Version:** 1.0.0
+```
+
+Format: `MAJOR.MINOR.PATCH` per semantic versioning.
+
+| Increment | When to use |
+|-----------|------------|
+| MAJOR | Breaking change to the agent's scope, interface, or required inputs |
+| MINOR | New capability, new section, or significant behavior change |
+| PATCH | Correction, clarification, or minor wording update |
+
+### Changelog Convention
+
+Each file should maintain a changelog table near its end:
+
+```markdown
+## Changelog
+
+| Version | Date | Change |
+|---------|------|--------|
+| 1.0.0 | YYYY-MM-DD | Initial version |
+```
+
+### Deprecation Policy
+
+1. Add a deprecation notice at the top of the file:
+
+```
+> **DEPRECATED as of YYYY-MM-DD.** Use `<replacement-file>` instead.
+> This file will be removed on YYYY-MM-DD (30 days after deprecation).
+```
+
+2. Set `"status": "deprecated"` in `subagents/registry.json` with
+   `"deprecation_date"` and `"removal_date"`.
+3. Deprecated files remain for **30 days**, then are deleted.
+4. Any agent that depends on a deprecated file must be updated before
+   its removal date.
+
+### Machine-Readable Registry
+
+`subagents/registry.json` catalogs all agents and skills with their domain,
+version, and status. Update it whenever an agent or skill file is added,
+modified to a new MINOR/MAJOR version, deprecated, or removed.
+
+---
+
 ## 9. Registered Agents
 
 | Agent file | Role |

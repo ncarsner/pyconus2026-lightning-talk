@@ -25,7 +25,7 @@ non-negotiable unless explicitly overridden in writing by a human reviewer.
 15. [Placeholder: Accessibility and Internationalization](#placeholder-accessibility-and-internationalization)
 16. [Placeholder: Data Privacy and Compliance](#placeholder-data-privacy-and-compliance)
 17. [Placeholder: Deployment and Environment Parity](#placeholder-deployment-and-environment-parity)
-18. [Placeholder: Code Review and Approval Workflow](#placeholder-code-review-and-approval-workflow)
+18. [Code Review and Approval Workflow](#18-code-review-and-approval-workflow)
 
 ---
 
@@ -483,6 +483,66 @@ directives in addition to every other rule in this file.
 - Every non-trivial decision must include a brief rationale in the response.
 - Never fabricate context, file paths, or behavior — request clarification instead.
 - If a skill invocation fails, log the error and halt unless a fallback is defined.
+
+---
+
+## 18. Code Review and Approval Workflow
+
+**Rule:** All code changes must pass automated checks and receive human approval
+before merging. Required approvals and the review checklist vary by PR type.
+
+### PR Types and Minimum Approvals
+
+| PR type | Definition | Required approvals |
+|---------|-----------|-------------------|
+| Hotfix | Critical bug fix; no new features | 1 human |
+| Feature | New capability, skill file, or agent definition | 1 human |
+| Architectural | Changes to RULES.md, AGENTS.md, subagents.md, or any file that governs agent behavior | 2 humans |
+| Breaking | Removes or renames a public interface, agent, or skill | 2 humans |
+
+### Automated Checks (must all pass before requesting review)
+
+1. `pre-commit run --all-files` — secret scanning and hook suite (§8)
+2. `ruff check .` — no lint errors
+3. `mypy src/` — no type errors (where `src/` exists)
+4. `python3 -m pytest --cov=src --cov-fail-under=100` — tests pass at 100% coverage
+
+No review may be requested while any automated check is failing.
+
+### Review Checklist
+
+Reviewers must verify each item before approving:
+
+- [ ] **Security** — No secrets or credentials in source. Pre-commit hooks are installed and passing.
+- [ ] **Coverage** — Test coverage did not decrease. All new code has tests.
+- [ ] **Type safety** — No new `# type: ignore` without a documented reason on the same line.
+- [ ] **RULES.md compliance** — Change does not violate any enforced section (§§1–13).
+- [ ] **Scope** — PR is atomic; unrelated changes are absent.
+- [ ] **Documentation** — README updated if public-facing behavior changed (§4).
+- [ ] **Dependencies** — Any new library is listed in `authorized_libraries.md` (§5).
+
+### Handling Disagreements
+
+1. The reviewer documents the objection as a PR comment citing a specific rule or rationale.
+2. The author must respond to every blocking objection before re-requesting review.
+3. If unresolved within one working day, escalate to the architectural review path.
+4. The project owner's decision is final. Do not merge over an unresolved blocking objection.
+
+### Escalation Path for Architectural Decisions
+
+A decision is architectural if it:
+
+- Changes the agent invocation protocol (`subagents/subagents.md` §§2–8)
+- Adds, removes, or renames a registered agent or skill
+- Modifies RULES.md §§1–13 (enforced sections)
+- Changes the directory structure of `skills/`, `subagents/`, or `templates/`
+
+Architectural decisions require:
+
+1. An open GitHub issue documenting the proposed change and rationale.
+2. At least two human approvals on the PR.
+3. The project owner as one of the approvers.
+4. A RULES.md changelog entry in the same commit.
 
 ---
 
