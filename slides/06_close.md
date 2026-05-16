@@ -3,4 +3,4 @@
 **Nicholas Carsner**
 
 - LinkedIn, BlueSky
-- ncarnser @ github
+- ncarsner @ github
