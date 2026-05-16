@@ -1,9 +1,6 @@
 # Thank You
 
-**[SPEAKER NAME]**
+**Nicholas Carsner**
 
-- [CONTACT / SOCIAL HANDLE]
-- [REPO OR PROJECT URL]
-- [SLIDES URL]
-
-Questions?
+- LinkedIn, BlueSky
+- ncarnser @ github
