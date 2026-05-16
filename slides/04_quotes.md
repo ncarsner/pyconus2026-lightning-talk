@@ -1,13 +1,16 @@
-# What People Are Saying
+# Inspiratiojn
 
 ---
 
-> "[QUOTE PLACEHOLDER — first quote text goes here.]"
+> "What has been will be again,
+    what has been done will be done again;
+    there is nothing new under the sun."
 
-— **[SPEAKER 1 NAME]**, [SPEAKER 1 TITLE / AFFILIATION]
+— **Ecclesiates 1:9**
 
 ---
 
-> "[QUOTE PLACEHOLDER — second quote text goes here.]"
+> "Amateurs practice until they get it right.
+Professionals practice until they can’t get it wrong"
 
-— **[SPEAKER 2 NAME]**, [SPEAKER 2 TITLE / AFFILIATION]
+— **Walter Beasley**, [Ensemble Dept. Prof, Berklee College of Music]
