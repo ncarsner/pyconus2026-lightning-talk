@@ -1,0 +1,9 @@
+# Thank You
+
+**[SPEAKER NAME]**
+
+- [CONTACT / SOCIAL HANDLE]
+- [REPO OR PROJECT URL]
+- [SLIDES URL]
+
+Questions?

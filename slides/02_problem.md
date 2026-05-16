@@ -1,0 +1,9 @@
+# The Problem
+
+- [PAIN POINT 1]
+- [PAIN POINT 2]
+- [PAIN POINT 3]
+
+---
+
+> [OPTIONAL FRAMING STAT OR QUESTION]

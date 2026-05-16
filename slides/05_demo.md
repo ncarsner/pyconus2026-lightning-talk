@@ -1,0 +1,9 @@
+# Demo / Example
+
+[DESCRIBE WHAT THE DEMO SHOWS]
+
+```python
+# [DEMO CODE PLACEHOLDER]
+```
+
+**Result:** [EXPECTED OUTPUT OR OUTCOME]
