@@ -1,11 +1,10 @@
-# [TALK TITLE]
+# Prompt, Pray, Iterate: A Tour of Failed Agentic Usage from a Failed User
 
-## [SUBTITLE OR TAGLINE]
+## Are you using AI agents optimized to their fullest? Me neither! Shed imposter syndrome as you learn the trials and tribulations from someone not ashamed to share their tests and pitfalls from agentic AI engagement and solutions.
 
-**[SPEAKER NAME]**
-[SPEAKER TITLE / AFFILIATION]
+**Nicholas Carsner**
 
-[DATE] · PyCon US 2026
+May 16, 2026 · PyCon US 2026
 
 ---
 
